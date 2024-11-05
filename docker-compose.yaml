@@ -10,6 +10,7 @@ services:
     container_name: "samolet-nginx"
     ports:
       - 80:80
+      - 443:443
     depends_on:
       - next-app
     restart: always

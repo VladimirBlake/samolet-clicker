@@ -1,0 +1,16 @@
+services:
+  next-app:
+    build: ./web-app
+    container_name: "samolet-next-app"
+    volumes:
+      - "./web-app:/app"
+      - /app/node_modules
+  nginx:
+    build: ./nginx
+    container_name: "samolet-nginx"
+    ports:
+      - 80:80
+    depends_on:
+      - next-app
+    restart: always
+#TODO: Add and install strapi

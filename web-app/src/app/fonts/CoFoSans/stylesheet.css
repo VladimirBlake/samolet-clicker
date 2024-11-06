@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "CoFo Sans";
+  src: url("CoFoSans-Bold.woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CoFo Sans";
+  src: url("CoFoSans-Black.woff2");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CoFo Sans";
+  src: url("CoFoSans-Medium.woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CoFo Sans";
+  src: url("CoFoSans-Regular.woff2");
+  font-weight: normal;
+  font-style: normal;
+}

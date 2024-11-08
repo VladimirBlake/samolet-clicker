@@ -1,3 +1,7 @@
+"use client";
+
+import { Page } from "@/components/Page";
+
 export default function Home() {
-  return <div>Sample text.</div>;
+  return <Page back={false}>123</Page>;
 }

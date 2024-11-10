@@ -1,3 +1,5 @@
-body {
-  background: var(--tg-theme-secondary-bg-color, white);
-}
+@import url(../fonts/CoFoSans/stylesheet.css);
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

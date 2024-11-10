@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
-    <html>
-      <body>
+    <html className="max-w-[390px] h-full max-h-dvh">
+      <body className="bg-bg-blue font-cofo text-white w-full h-full max-h-dvh relative">
         <Root>{children}</Root>
       </body>
     </html>

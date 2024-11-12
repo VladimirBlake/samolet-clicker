@@ -5,13 +5,18 @@ export default function Improvement({
   title,
   description,
   type,
+  onClick,
 }: {
   title: string;
   description: string;
   type: "energy" | "speed";
+  onClick: () => void;
 }) {
   return (
-    <div className="p-4 bg-[#3496FD] rounded-3xl flex flex-col justify-between">
+    <div
+      onClick={onClick}
+      className="p-4 bg-[#3496FD] rounded-3xl flex flex-col justify-between cursor-pointer"
+    >
       <div>
         <div className="rounded-full bg-[#047DFC] size-10 flex items-center justify-center">
           <img src={type === "energy" ? energy.src : speed.src} alt="" />

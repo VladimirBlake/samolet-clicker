@@ -1,11 +1,23 @@
-import Bonus from "./Bonus";
+import MoneyOption from "./MoneyOption";
 
 export default function BonusesList() {
   return (
     <>
-      <Bonus title="Подписаться на ТГ-канал" reward={200} />
-      <Bonus title="Проданы 10 квартир" reward={900} />
-      <Bonus title="Проданы 5 квартир" reward={500} />
+      <MoneyOption
+        useHeight={false}
+        title={"Подписаться на ТГ-канал"}
+        moneyValue={200}
+      />
+      <MoneyOption
+        useHeight={false}
+        title={"Проданы 10 квартир"}
+        moneyValue={900}
+      />
+      <MoneyOption
+        useHeight={false}
+        title={"Проданы 5 квартир"}
+        moneyValue={500}
+      />
     </>
   );
 }

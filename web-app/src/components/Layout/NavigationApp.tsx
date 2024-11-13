@@ -14,7 +14,7 @@ export default function NavigationApp() {
   const currentPath = usePathname();
 
   return (
-    <div className="border-[1px] border-[#4DA3FD] p-1 rounded-full bg-layoutGradient flex">
+    <div className="border-[1px] border-[#4DA3FD] p-1 rounded-full bg-layoutGradient flex z-10">
       <NavigationElement
         title="главная"
         activeImg={star}

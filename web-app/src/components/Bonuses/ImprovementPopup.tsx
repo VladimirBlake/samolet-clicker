@@ -34,7 +34,7 @@ export default function ImprovementPopup({
   }
 
   return isShown ? (
-    <div className="bg-bg-blue w-full h-full absolute left-0 bottom-0 z-10 px-5">
+    <div className="bg-bg-blue w-full h-full absolute left-0 bottom-0 z-20 px-5">
       <div className="flex justify-end pt-8 pb-6 pr-4">
         <button onClick={setNotShown}>
           <img src={closingCross.src} alt="" />

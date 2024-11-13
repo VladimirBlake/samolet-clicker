@@ -14,7 +14,7 @@ export default function PaymentPosition({
       <span className="text-lg text-[#93CFFF]">{title}</span>
       <div className="flex items-center">
         <img className="w-4 h-auto" src={coin.src} alt="" />
-        <span className="font-black ml-4 text-lg">{price}</span>
+        <span className="font-black ml-1 text-lg">{price}</span>
       </div>
     </div>
   );

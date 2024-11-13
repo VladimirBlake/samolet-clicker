@@ -6,10 +6,10 @@ export default function BottomPopup({
   setNotShown,
 }: {
   children: React.ReactNode;
-  setNotShown: () => void;
+  setNotShown?: () => void;
 }) {
   return (
-    <div className="w-full h-full bg-white/5 backdrop-blur-md absolute z-20 left-0 top-0">
+    <div className="w-full h-full bg-white/5 backdrop-blur-md absolute left-0 top-0 z-30">
       <div className="w-full absolute bottom-0 bg-bg-blue rounded-t-[40px] px-5">
         <div className="flex justify-end pt-8 pr-6 pb-7">
           <button onClick={setNotShown}>

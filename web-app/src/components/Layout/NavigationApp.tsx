@@ -32,6 +32,7 @@ export default function NavigationApp() {
         activeImg={apartments}
         inactiveImg={apartments_inactive}
         path="/apartments"
+        includeSlugs={true}
       />
       <NavigationElement
         title="рейтинг"

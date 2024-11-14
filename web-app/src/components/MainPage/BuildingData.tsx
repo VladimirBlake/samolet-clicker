@@ -11,7 +11,7 @@ export default function BuildingData() {
         <img
           src={levelOneBuilding.src}
           alt=""
-          className="w-10/12 h-auto mx-auto"
+          className="w-8/12 h-auto mx-auto"
         />
       </div>
     </>

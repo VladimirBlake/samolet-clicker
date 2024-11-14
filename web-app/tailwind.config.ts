@@ -15,6 +15,11 @@ const config: Config = {
         layoutGradient:
           "linear-gradient(0deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%)",
         progressBar: 'url("/imgs/level-full.svg")',
+        ratingHeader:
+          'url("/imgs/header-bg.png"), linear-gradient(0deg, #3599FF, #3599FF)',
+      },
+      backgroundSize: {
+        ratingHeaderSize: "50%, 100%",
       },
       fontFamily: {
         cofo: "CoFo Sans",

@@ -35,13 +35,13 @@ const config: Config = {
         },
         coinDisappear: {
           "0%": { transform: "translateY(0)", opacity: "1" },
-          "100%": { transform: "translateY(-50px)", opacity: "0" },
+          "100%": { transform: "translateY(-65px)", opacity: "0" },
         },
       },
       animation: {
         logoIntro: "logoIntro 1.4s ease-out",
         buildingImage: "buildingImage 1s ease-out",
-        coinDisappear: "coinDisappear 2s forwards",
+        coinDisappear: "coinDisappear 1s forwards 0s",
       },
     },
   },

@@ -33,10 +33,15 @@ const config: Config = {
           "0%": { transform: "translate(-50%, 0px)", opacity: "1" },
           "100%": { transform: "translate(-50%, -30px)", opacity: "0" },
         },
+        coinDisappear: {
+          "0%": { transform: "translateY(0)", opacity: "1" },
+          "100%": { transform: "translateY(-50px)", opacity: "0" },
+        },
       },
       animation: {
         logoIntro: "logoIntro 1.4s ease-out",
         buildingImage: "buildingImage 1s ease-out",
+        coinDisappear: "coinDisappear 2s forwards",
       },
     },
   },

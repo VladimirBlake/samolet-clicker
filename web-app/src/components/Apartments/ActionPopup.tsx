@@ -13,6 +13,7 @@ import {
   incrementCoinsByValue,
   spendValue,
 } from "@/lib/features/coins/coinsSlice";
+import { useAppSelector } from "@/lib/hooks";
 
 export default function ActionPopup({
   title,
@@ -36,6 +37,7 @@ export default function ActionPopup({
   apartNum: ApartKey;
 }) {
   const dispatch = useDispatch();
+  const currentBalance = useAppSelector((state) => state.coins.value);
 
   function onActionBuy() {
     switch (actionType) {
@@ -47,8 +49,10 @@ export default function ActionPopup({
         dispatch(incrementCoinsByValue(isApartmentUpgraded ? 12500 : 10000));
         break;
       case "upgrade":
-        dispatch(upgradeApartment(apartNum));
-        dispatch(spendValue(2500));
+        if (currentBalance >= 2500) {
+          dispatch(upgradeApartment(apartNum));
+          dispatch(spendValue(2500));
+        }
         break;
       default:
         throw Error("No such type");

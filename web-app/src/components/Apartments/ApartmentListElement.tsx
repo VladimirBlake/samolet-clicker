@@ -1,4 +1,5 @@
-import { Link } from "@telegram-apps/telegram-ui";
+"use client";
+import { Link } from "@/components/Link/Link";
 
 export default function ApartmentListElement({
   apartNum,
@@ -8,9 +9,9 @@ export default function ApartmentListElement({
   return (
     <Link
       href={`/apartments/${apartNum}`}
-      className="rounded-[26px] text-lg font-medium bg-[#3496FD] px-5 flex items-center text-white cursor-pointer"
+      className="rounded-[26px] text-lg font-medium bg-[#3496FD] px-5 flex items-center cursor-pointer visited:text-white"
     >
-      Квартира {apartNum}
+      <span className="text-white">Квартира {apartNum}</span>
     </Link>
   );
 }

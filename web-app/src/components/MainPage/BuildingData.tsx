@@ -5,6 +5,9 @@ import levelOneBuilding from "../../app/_assets/main-page/buildings/level1.png";
 import CoinAnimated from "./CoinAnimated";
 import { hapticFeedback } from "@telegram-apps/sdk-react";
 import { useAnimate } from "motion/react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { incrementCoinsByValue } from "@/lib/features/coins/coinsSlice";
+import { spendEnergy } from "@/lib/features/energy/energySlice";
 
 type CoinInitData = {
   id: number;
@@ -15,6 +18,8 @@ type CoinInitData = {
 export default function BuildingData() {
   const [coins, setCoins] = useState<CoinInitData[]>([]);
   const [scope, animate] = useAnimate();
+  const multiplier = useAppSelector((state) => state.multiplier.value);
+  const dispatch = useAppDispatch();
 
   const handleBuildingPointerup: PointerEventHandler<HTMLDivElement> = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -25,7 +30,12 @@ export default function BuildingData() {
       y: e.clientY - rect.top - 15,
     };
     setCoins((prev) => [...prev, newCoinCoordinates]);
+
+    dispatch(incrementCoinsByValue(multiplier));
+    dispatch(spendEnergy());
+
     animate(scope.current, { x: [0, -4, 0], y: [0, -4, 0] }, { duration: 0.1 });
+
     if (hapticFeedback.impactOccurred.isSupported()) {
       hapticFeedback.impactOccurred("medium");
     }

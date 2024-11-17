@@ -3,6 +3,8 @@ import energy from "../../app/_assets/layout/energy.svg";
 import coin from "../../app/_assets/layout/coin.png";
 import { initData, User, useSignal } from "@telegram-apps/sdk-react";
 import { useMemo } from "react";
+import { useAppSelector } from "@/lib/hooks";
+import { formatNumber } from "@/utils/formatNumber";
 
 type UserHeaderData = {
   username?: string;
@@ -39,6 +41,18 @@ export default function HeaderApp() {
     return;
   }
 
+  const coinsBalanceRaw = useAppSelector((state) => state.coins.value);
+  const coinsBalance = useMemo(
+    () => formatNumber(coinsBalanceRaw),
+    [coinsBalanceRaw]
+  );
+
+  const energyBalanceRaw = useAppSelector((state) => state.energy.value);
+  const energyBalance = useMemo(
+    () => formatNumber(energyBalanceRaw),
+    [energyBalanceRaw]
+  );
+
   const username = useMemo(
     () => getUsername(initDataState?.user),
     [initDataState]
@@ -65,13 +79,15 @@ export default function HeaderApp() {
           <p className="font-bold text-lg">{username}</p>
           <div className="flex items-center">
             <img src={energy.src} className="w-2.5 h-auto" alt="" />
-            <span className="font-bold text-[#89C5FF] ml-1 text-sm">5 000</span>
+            <span className="font-bold text-[#89C5FF] ml-1 text-sm">
+              {energyBalance}
+            </span>
           </div>
         </div>
       </div>
       <div className="flex items-center ml-auto">
         <img src={coin.src} className="w-4 h-auto" />
-        <span className="font-bold text-xl ml-1">10 500</span>
+        <span className="font-bold text-xl ml-1">{coinsBalance}</span>
       </div>
     </div>
   );

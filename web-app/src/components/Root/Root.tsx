@@ -17,6 +17,10 @@ import { useClientOnce } from "@/hooks/useClientOnce";
 import { init } from "@/core/init";
 
 import "./styles.css";
+import { setCoinsValue } from "@/lib/features/coins/coinsSlice";
+import { useAppDispatch } from "@/lib/hooks";
+import { collectEnergy, setEnergy } from "@/lib/features/energy/energySlice";
+import { setMultiplier } from "@/lib/features/multiplier/multiplierSlice";
 
 function RootInner({ children }: PropsWithChildren) {
   const isDev = process.env.NODE_ENV === "development";
@@ -58,6 +62,22 @@ export function Root(props: PropsWithChildren) {
   // the Server Side Rendering. That's why we are showing loader on the server
   // side.
   const didMount = useDidMount();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Coins
+    dispatch(setCoinsValue(10500));
+    // Energy
+    dispatch(setEnergy(5000));
+    // Multiplier
+    dispatch(setMultiplier(1));
+
+    const interval = setInterval(() => {
+      dispatch(collectEnergy());
+    }, 1200);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return didMount ? (
     <ErrorBoundary fallback={ErrorPage}>

@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+*::before,
+*::after {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 @layer utilities {
   .user-image-hexagon {
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);

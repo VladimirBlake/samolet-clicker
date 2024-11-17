@@ -6,26 +6,11 @@ import building from "./_assets/intro/3d-building.png";
 import lightBg from "./_assets/intro/bg-light.png";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
-import { setCoinsValue } from "@/lib/features/coins/coinsSlice";
-import { setEnergy } from "@/lib/features/energy/energySlice";
-import { setMultiplier } from "@/lib/features/multiplier/multiplierSlice";
 
 export default function Home() {
   const router = useRouter();
 
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
-    // Coins
-    dispatch(setCoinsValue(10500));
-
-    // Energy
-    dispatch(setEnergy(5000));
-
-    // Multiplier
-    dispatch(setMultiplier(1));
-
     setTimeout(() => {
       router.push("/main-page");
     }, 2000);

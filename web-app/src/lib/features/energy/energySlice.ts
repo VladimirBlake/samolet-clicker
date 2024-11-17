@@ -7,7 +7,8 @@ const energySlice = createSlice({
   },
   reducers: {
     collectEnergy: (state) => {
-      state.value += 1;
+      const newEnergy = state.value + 1;
+      state.value = Math.min(5000, newEnergy);
     },
     spendEnergy: (state) => {
       state.value -= 1;
@@ -16,7 +17,7 @@ const energySlice = createSlice({
       state.value = action.payload;
     },
     addEnergy: (state, action) => {
-      state.value = Math.min(5000, action.payload);
+      state.value = Math.min(5000, action.payload + state.value);
     },
   },
 });

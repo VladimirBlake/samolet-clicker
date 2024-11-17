@@ -6,22 +6,6 @@ import { useMemo } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { formatNumber } from "@/utils/formatNumber";
 
-type UserHeaderData = {
-  username?: string;
-  firstName: string;
-  lastName?: string;
-  photoUrl?: string;
-};
-
-function getUserHeaderData(user: User): UserHeaderData {
-  return {
-    username: user?.username,
-    firstName: user.firstName,
-    lastName: user?.lastName,
-    photoUrl: user?.photoUrl,
-  };
-}
-
 function getUsername(user?: User) {
   if (!user) {
     return;
@@ -71,7 +55,7 @@ export default function HeaderApp() {
       <div className="flex">
         <div className="size-[50px] bg-white user-image-hexagon flex items-center justify-center">
           <div
-            style={{ background: userPhoto, backgroundSize: "50px" }}
+            style={{ background: userPhoto, backgroundSize: "46px" }}
             className="size-[46px] user-image-hexagon bg-[length:50px]"
           ></div>
         </div>

@@ -8,6 +8,8 @@ import { useAnimate } from "motion/react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { incrementCoinsByValue } from "@/lib/features/coins/coinsSlice";
 import { spendEnergy } from "@/lib/features/energy/energySlice";
+import BuildingImage from "./BuildingImage";
+import { increaseXpByAmount } from "@/lib/features/building/buildingSlice";
 
 type CoinInitData = {
   id: number;
@@ -19,6 +21,7 @@ export default function BuildingData() {
   const [coins, setCoins] = useState<CoinInitData[]>([]);
   const [scope, animate] = useAnimate();
   const multiplier = useAppSelector((state) => state.multiplier.value);
+  const buildingLevel = useAppSelector((state) => state.building.level);
   const dispatch = useAppDispatch();
 
   const handleBuildingPointerup: PointerEventHandler<HTMLDivElement> = (e) => {
@@ -32,6 +35,7 @@ export default function BuildingData() {
     setCoins((prev) => [...prev, newCoinCoordinates]);
 
     dispatch(incrementCoinsByValue(multiplier));
+    dispatch(increaseXpByAmount(multiplier));
     dispatch(spendEnergy());
 
     animate(scope.current, { x: [0, -4, 0], y: [0, -4, 0] }, { duration: 0.1 });
@@ -46,15 +50,10 @@ export default function BuildingData() {
 
   return (
     <>
-      <p className="text-center text-sm font-medium">1 уровень</p>
+      <p className="text-center text-sm font-medium">{buildingLevel} уровень</p>
       <ProgressBar />
       <div onPointerUp={handleBuildingPointerup} className="px-2 mt-5 relative">
-        <img
-          ref={scope}
-          src={levelOneBuilding.src}
-          alt=""
-          className="w-8/12 h-auto mx-auto"
-        />
+        <BuildingImage scope={scope} level={buildingLevel} />
         {coins.map((coin) => (
           <CoinAnimated key={coin.id} xStart={coin.x} yStart={coin.y} />
         ))}

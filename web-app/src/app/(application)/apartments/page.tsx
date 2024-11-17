@@ -1,11 +1,14 @@
+"use client";
 import ApartmentListElement from "@/components/Apartments/ApartmentListElement";
 import NotAvailable from "@/components/Apartments/NotAvailable";
 import { Page } from "@/components/Page";
+import { useAppSelector } from "@/lib/hooks";
 
-const apartmentsAvailable = true;
 const apartmentsNums = Array.from(Array(8).keys(), (_, i) => i + 1);
 
 export default function ApartmentsPage() {
+  const apartmentsAvailable =
+    useAppSelector((state) => state.building.level) === 7;
   return (
     <Page back={false}>
       {apartmentsAvailable ? (

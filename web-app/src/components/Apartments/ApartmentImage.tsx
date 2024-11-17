@@ -12,7 +12,7 @@ export default function ApartmentImage({
   return (
     <div className={className}>
       <img
-        className="w-[230px] mx-auto"
+        className="w-[223px] mx-auto"
         src={isUpgraded ? apartmentImproved.src : apartmentRegular.src}
         alt=""
       />

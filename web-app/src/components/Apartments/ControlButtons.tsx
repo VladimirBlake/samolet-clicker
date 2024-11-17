@@ -5,6 +5,11 @@ import sellIcon from "../../app/_assets/apartments/sell-icon.svg";
 import upgradeIcon from "../../app/_assets/apartments/upgrade-icon.svg";
 import ActionPopup from "./ActionPopup";
 import ApartmentButton from "./ApartmentButton";
+import { useAppSelector } from "@/lib/hooks";
+import {
+  ApartKey,
+  ApartmentsState,
+} from "@/lib/features/apartments/apartmentsSlice";
 
 type ApartmentActionPopupState = {
   isShown: boolean;
@@ -13,6 +18,7 @@ type ApartmentActionPopupState = {
   buttonText: string;
   isApartmentUpgraded: boolean;
   price: number;
+  actionType: "rent" | "sell" | "upgrade";
 };
 
 const initialPopupState: ApartmentActionPopupState = {
@@ -22,6 +28,7 @@ const initialPopupState: ApartmentActionPopupState = {
   buttonText: "",
   isApartmentUpgraded: false,
   price: 0,
+  actionType: "rent",
 };
 
 const popUpStates = {
@@ -31,7 +38,6 @@ const popUpStates = {
     description:
       "Сдача в аренду будет приносить вам прибыль каждый день в течение недели",
     buttonText: "Сдать",
-    price: 500,
   },
   sell: {
     isShown: true,
@@ -39,7 +45,6 @@ const popUpStates = {
     description:
       "Продажа квартиры принесет вам единоразовую большую прибыль,которую вы можете потратить на улучшения",
     buttonText: "Продать",
-    price: 10000,
   },
   upgrade: {
     isShown: true,
@@ -47,37 +52,46 @@ const popUpStates = {
     description:
       "Если вы прокачаете квартиру, то вы сможете за более высокую стоимость сдать/продать эту квартиру",
     buttonText: "Прокачать",
-    price: 2500,
   },
 };
 
 export default function ControlButtons({
-  isApartmentUpgraded,
+  apartmentInfo,
+  apartmentNum,
+  setNotRented,
 }: {
-  isApartmentUpgraded: boolean;
+  apartmentInfo: ApartmentsState;
+  apartmentNum: ApartKey;
+  setNotRented: (apartNum: ApartKey) => void;
 }) {
   const [popupInfo, setPopupInfo] =
     useState<ApartmentActionPopupState>(initialPopupState);
 
   function openRentPopup() {
-    setPopupInfo((prevState) => ({
+    setPopupInfo({
       ...popUpStates.rent,
-      isApartmentUpgraded,
-    }));
+      actionType: "rent",
+      isApartmentUpgraded: apartmentInfo.isUpgraded,
+      price: apartmentInfo.isUpgraded ? 550 : 500,
+    });
   }
 
   function openSellPopup() {
-    setPopupInfo((prevState) => ({
+    setPopupInfo({
       ...popUpStates.sell,
-      isApartmentUpgraded,
-    }));
+      actionType: "sell",
+      isApartmentUpgraded: apartmentInfo.isUpgraded,
+      price: apartmentInfo.isUpgraded ? 12500 : 10000,
+    });
   }
 
   function openUpgradedPopup() {
-    setPopupInfo((prevState) => ({
+    setPopupInfo({
       ...popUpStates.upgrade,
-      isApartmentUpgraded,
-    }));
+      actionType: "upgrade",
+      isApartmentUpgraded: false,
+      price: 2500,
+    });
   }
 
   function closePopUp() {
@@ -85,6 +99,53 @@ export default function ControlButtons({
       ...prevState,
       isShown: false,
     }));
+  }
+
+  if (apartmentInfo.isRented) {
+    return (
+      <div>
+        <p className="text-[#89C5FF] font-bold text-xl text-center mt-3">
+          Вы сдали эту квартиру
+        </p>
+        <ApartmentButton
+          className="mt-2 w-full"
+          title="Отменить сдачу в аренду"
+          onClick={() => setNotRented(apartmentNum)}
+        />
+      </div>
+    );
+  }
+
+  if (apartmentInfo.isSold) {
+    return (
+      <div>
+        <p className="text-[#89C5FF] font-bold text-xl text-center mt-8">
+          Вы продали эту квартиру
+        </p>
+      </div>
+    );
+  }
+
+  if (apartmentInfo.isUpgraded) {
+    return (
+      <div className="grid grid-cols-2 gap-2 mt-8">
+        <ApartmentButton
+          onClick={openRentPopup}
+          title="Сдать"
+          icon={rentIcon}
+        />
+        <ApartmentButton
+          onClick={openSellPopup}
+          title="Продать"
+          icon={sellIcon}
+        />
+        <ActionPopup
+          {...popupInfo}
+          setNotShown={closePopUp}
+          apartNum={apartmentNum}
+        />
+      </div>
+    );
   }
 
   return (
@@ -101,7 +162,11 @@ export default function ControlButtons({
         title="Прокачать"
         icon={upgradeIcon}
       />
-      <ActionPopup {...popupInfo} setNotShown={closePopUp} />
+      <ActionPopup
+        {...popupInfo}
+        setNotShown={closePopUp}
+        apartNum={apartmentNum}
+      />
     </div>
   );
 }

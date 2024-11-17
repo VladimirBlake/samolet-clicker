@@ -3,6 +3,7 @@ import coinsReducer from "./features/coins/coinsSlice";
 import energyReducer from "./features/energy/energySlice";
 import multiplierReducer from "./features/multiplier/multiplierSlice";
 import buildingReducer from "./features/building/buildingSlice";
+import apartmentsReducer from "./features/apartments/apartmentsSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -11,6 +12,7 @@ export const makeStore = () => {
       energy: energyReducer,
       multiplier: multiplierReducer,
       building: buildingReducer,
+      apartments: apartmentsReducer,
     },
   });
 };

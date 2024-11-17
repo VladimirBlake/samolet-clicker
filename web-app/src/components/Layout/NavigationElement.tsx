@@ -37,7 +37,9 @@ export default function NavigationElement({
         </div>
         <p
           className={`font-medium mt-1.5 text-sm ${
-            currentPath == path ? "text-white" : "text-[#93CFFF]"
+            (includeSlugs ? currentPath.includes(path) : currentPath == path)
+              ? "text-white"
+              : "text-[#93CFFF]"
           }`}
         >
           {title}

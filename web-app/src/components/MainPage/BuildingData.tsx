@@ -4,6 +4,7 @@ import ProgressBar from "./ProgressBar";
 import levelOneBuilding from "../../app/_assets/main-page/buildings/level1.png";
 import CoinAnimated from "./CoinAnimated";
 import { hapticFeedback } from "@telegram-apps/sdk-react";
+import { useAnimate } from "motion/react";
 
 type CoinInitData = {
   id: number;
@@ -13,6 +14,7 @@ type CoinInitData = {
 
 export default function BuildingData() {
   const [coins, setCoins] = useState<CoinInitData[]>([]);
+  const [scope, animate] = useAnimate();
 
   const handleBuildingPointerup: PointerEventHandler<HTMLDivElement> = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -23,6 +25,7 @@ export default function BuildingData() {
       y: e.clientY - rect.top - 15,
     };
     setCoins((prev) => [...prev, newCoinCoordinates]);
+    animate(scope.current, { x: [0, -4, 0], y: [0, -4, 0] }, { duration: 0.1 });
     if (hapticFeedback.impactOccurred.isSupported()) {
       hapticFeedback.impactOccurred("medium");
     }
@@ -37,6 +40,7 @@ export default function BuildingData() {
       <ProgressBar />
       <div onPointerUp={handleBuildingPointerup} className="px-2 mt-5 relative">
         <img
+          ref={scope}
           src={levelOneBuilding.src}
           alt=""
           className="w-8/12 h-auto mx-auto"

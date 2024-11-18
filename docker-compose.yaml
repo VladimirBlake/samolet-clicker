@@ -14,4 +14,15 @@ services:
     depends_on:
       - next-app
     restart: always
+  postgres-db:
+    image: postgres:16.3-alpine3.20
+    container_name: "samolet-db"
+    restart: always
+    env_file: .env
+    volumes:
+      - strapi-samolet-data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+volumes:
+  strapi-samolet-data:
 #TODO: Add and install strapi

@@ -4,22 +4,39 @@ import { Page } from "@/components/Page";
 import samoletLogo from "./_assets/intro/logotype.svg";
 import building from "./_assets/intro/3d-building.png";
 import lightBg from "./_assets/intro/bg-light.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
+import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export default function Home() {
   const router = useRouter();
+  const [userId, setUserId] = useState("");
+  const [milliseconds, setMilliseconds] = useState(0);
 
   useEffect(() => {
-    setTimeout(() => {
-      router.push("/main-page");
-    }, 2000);
+    const { initDataRaw } = retrieveLaunchParams();
+    Promise.all([
+      fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/auth`, {
+        method: "POST",
+        headers: {
+          Authorization: `tma ${initDataRaw}`,
+        },
+      }),
+      new Promise((resolve, reject) => setTimeout(resolve, 2000)),
+    ])
+      .then((res) => res[0].json())
+      .then((res) => {
+        setUserId(res.userJwt);
+        router.push("/main-page");
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
     <Page back={false}>
       <div className="w-full h-screen max-h-screen px-7 overflow-clip">
+        {userId}
         <motion.img
           initial={{ transform: "translate(-50%, 120px)" }}
           animate={{

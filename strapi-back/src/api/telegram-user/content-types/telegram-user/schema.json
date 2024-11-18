@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "telegram_users",
+  "info": {
+    "singularName": "telegram-user",
+    "pluralName": "telegram-users",
+    "displayName": "TelegramUser"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "username": {
+      "type": "string"
+    },
+    "telegram_id": {
+      "type": "string"
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "coinsBalance": {
+      "type": "integer"
+    }
+  }
+}

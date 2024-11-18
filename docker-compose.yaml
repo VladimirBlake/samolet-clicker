@@ -23,6 +23,22 @@ services:
       - strapi-samolet-data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
+  strapi:
+    build: ./strapi-back
+    container_name: "samolet-strapi"
+    env_file: "./strapi-back/.env"
+    restart: unless-stopped
+    volumes:
+      - ./strapi-back/config:/opt/app/config
+      - ./strapi-back/src:/opt/app/src
+      - ./strapi-back/package.json:/opt/package.json
+      - ./strapi-back/yarn.lock:/opt/yarn.lock
+      - ./strapi-back/.env:/opt/app/.env
+      - ./strapi-back/public/uploads:/opt/app/public/uploads
+    ports:
+      - "1337:1337"
+    depends_on:
+      - postgres-db
 volumes:
   strapi-samolet-data:
 #TODO: Add and install strapi

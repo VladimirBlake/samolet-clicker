@@ -11,8 +11,6 @@ import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 
 export default function Home() {
   const router = useRouter();
-  const [userId, setUserId] = useState("");
-  const [milliseconds, setMilliseconds] = useState(0);
 
   useEffect(() => {
     const { initDataRaw } = retrieveLaunchParams();
@@ -27,7 +25,6 @@ export default function Home() {
     ])
       .then((res) => res[0].json())
       .then((res) => {
-        setUserId(res.userJwt);
         router.push("/main-page");
       })
       .catch((err) => console.log(err));
@@ -36,7 +33,6 @@ export default function Home() {
   return (
     <Page back={false}>
       <div className="w-full h-screen max-h-screen px-7 overflow-clip">
-        {userId}
         <motion.img
           initial={{ transform: "translate(-50%, 120px)" }}
           animate={{

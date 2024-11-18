@@ -12,7 +12,6 @@ import {
 } from "@/lib/features/apartments/apartmentsSlice";
 
 type ApartmentActionPopupState = {
-  isShown: boolean;
   title: string;
   description: string;
   buttonText: string;
@@ -22,7 +21,6 @@ type ApartmentActionPopupState = {
 };
 
 const initialPopupState: ApartmentActionPopupState = {
-  isShown: false,
   title: "",
   description: "",
   buttonText: "",
@@ -33,21 +31,18 @@ const initialPopupState: ApartmentActionPopupState = {
 
 const popUpStates = {
   rent: {
-    isShown: true,
     title: "Сдать в аренду",
     description:
       "Сдача в аренду будет приносить вам прибыль каждый день в течение недели",
     buttonText: "Сдать",
   },
   sell: {
-    isShown: true,
     title: "Продать",
     description:
       "Продажа квартиры принесет вам единоразовую большую прибыль,которую вы можете потратить на улучшения",
     buttonText: "Продать",
   },
   upgrade: {
-    isShown: true,
     title: "Прокачать",
     description:
       "Если вы прокачаете квартиру, то вы сможете за более высокую стоимость сдать/продать эту квартиру",
@@ -67,6 +62,8 @@ export default function ControlButtons({
   const [popupInfo, setPopupInfo] =
     useState<ApartmentActionPopupState>(initialPopupState);
 
+  const [isPopUpShown, setIsPopUpShown] = useState<boolean>(false);
+
   function openRentPopup() {
     setPopupInfo({
       ...popUpStates.rent,
@@ -74,6 +71,7 @@ export default function ControlButtons({
       isApartmentUpgraded: apartmentInfo.isUpgraded,
       price: apartmentInfo.isUpgraded ? 550 : 500,
     });
+    setIsPopUpShown(true);
   }
 
   function openSellPopup() {
@@ -83,6 +81,7 @@ export default function ControlButtons({
       isApartmentUpgraded: apartmentInfo.isUpgraded,
       price: apartmentInfo.isUpgraded ? 12500 : 10000,
     });
+    setIsPopUpShown(true);
   }
 
   function openUpgradedPopup() {
@@ -92,81 +91,84 @@ export default function ControlButtons({
       isApartmentUpgraded: false,
       price: 2500,
     });
+    setIsPopUpShown(true);
   }
 
   function closePopUp() {
-    setPopupInfo((prevState) => ({
-      ...prevState,
-      isShown: false,
-    }));
-  }
-
-  if (apartmentInfo.isRented) {
-    return (
-      <div>
-        <p className="text-[#89C5FF] font-bold text-xl text-center mt-3">
-          Вы сдали эту квартиру
-        </p>
-        <ApartmentButton
-          className="mt-2 w-full"
-          title="Отменить сдачу в аренду"
-          onClick={() => setNotRented(apartmentNum)}
-        />
-      </div>
-    );
-  }
-
-  if (apartmentInfo.isSold) {
-    return (
-      <div>
-        <p className="text-[#89C5FF] font-bold text-xl text-center mt-8">
-          Вы продали эту квартиру
-        </p>
-      </div>
-    );
-  }
-
-  if (apartmentInfo.isUpgraded) {
-    return (
-      <div className="grid grid-cols-2 gap-2 mt-8">
-        <ApartmentButton
-          onClick={openRentPopup}
-          title="Сдать"
-          icon={rentIcon}
-        />
-        <ApartmentButton
-          onClick={openSellPopup}
-          title="Продать"
-          icon={sellIcon}
-        />
-        <ActionPopup
-          {...popupInfo}
-          setNotShown={closePopUp}
-          apartNum={apartmentNum}
-        />
-      </div>
-    );
+    setIsPopUpShown(false);
   }
 
   return (
-    <div className="grid grid-cols-2 gap-2">
-      <ApartmentButton onClick={openRentPopup} title="Сдать" icon={rentIcon} />
-      <ApartmentButton
-        onClick={openSellPopup}
-        title="Продать"
-        icon={sellIcon}
-      />
-      <ApartmentButton
-        onClick={openUpgradedPopup}
-        className="col-span-2"
-        title="Прокачать"
-        icon={upgradeIcon}
-      />
+    <>
+      {apartmentInfo.isRented && (
+        <div>
+          <p className="text-[#89C5FF] font-bold text-xl text-center mt-3">
+            Вы сдали эту квартиру
+          </p>
+          <ApartmentButton
+            className="mt-2 w-full"
+            title="Отменить сдачу в аренду"
+            onClick={() => setNotRented(apartmentNum)}
+          />
+        </div>
+      )}
+      {apartmentInfo.isSold && (
+        <div>
+          <p className="text-[#89C5FF] font-bold text-xl text-center mt-8">
+            Вы продали эту квартиру
+          </p>
+        </div>
+      )}
+      {apartmentInfo.isUpgraded &&
+        !apartmentInfo.isRented &&
+        !apartmentInfo.isSold && (
+          <div className="grid grid-cols-2 gap-2 mt-8">
+            <ApartmentButton
+              onClick={openRentPopup}
+              title="Сдать"
+              icon={rentIcon}
+            />
+            <ApartmentButton
+              onClick={openSellPopup}
+              title="Продать"
+              icon={sellIcon}
+            />
+          </div>
+        )}
+      {!apartmentInfo.isRented &&
+        !apartmentInfo.isUpgraded &&
+        !apartmentInfo.isSold && (
+          <div className="grid grid-cols-2 gap-2">
+            <ApartmentButton
+              onClick={openRentPopup}
+              title="Сдать"
+              icon={rentIcon}
+            />
+            <ApartmentButton
+              onClick={openSellPopup}
+              title="Продать"
+              icon={sellIcon}
+            />
+            <ApartmentButton
+              onClick={openUpgradedPopup}
+              className="col-span-2"
+              title="Прокачать"
+              icon={upgradeIcon}
+            />
+            <ActionPopup
+              isShown={isPopUpShown}
+              {...popupInfo}
+              setNotShown={closePopUp}
+              apartNum={apartmentNum}
+            />
+          </div>
+        )}
       <ActionPopup
+        isShown={isPopUpShown}
         {...popupInfo}
         setNotShown={closePopUp}
         apartNum={apartmentNum}
       />
-    </div>
+    </>
   );
 }

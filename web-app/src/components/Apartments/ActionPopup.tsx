@@ -14,8 +14,11 @@ import {
   spendValue,
 } from "@/lib/features/coins/coinsSlice";
 import { useAppSelector } from "@/lib/hooks";
+import SuccessSellScreen from "./SuccessSellScreen";
+import { memo, useState } from "react";
+import SuccessUpgradeScreen from "./SuccessUpgradeScreen";
 
-export default function ActionPopup({
+function ActionPopup({
   title,
   description,
   buttonText,
@@ -38,6 +41,8 @@ export default function ActionPopup({
 }) {
   const dispatch = useDispatch();
   const currentBalance = useAppSelector((state) => state.coins.value);
+  const [successNotificationShown, setSuccessNotificationShown] =
+    useState<boolean>(false);
 
   function onActionBuy() {
     switch (actionType) {
@@ -47,11 +52,14 @@ export default function ActionPopup({
       case "sell":
         dispatch(sellApartment(apartNum));
         dispatch(incrementCoinsByValue(isApartmentUpgraded ? 12500 : 10000));
+        setSuccessNotificationShown(true);
+        setTimeout(() => setSuccessNotificationShown(false), 2000);
         break;
       case "upgrade":
         if (currentBalance >= 2500) {
           dispatch(upgradeApartment(apartNum));
           dispatch(spendValue(2500));
+          setSuccessNotificationShown(true);
         }
         break;
       default:
@@ -77,6 +85,16 @@ export default function ActionPopup({
           />
         </BottomPopup>
       )}
+      {successNotificationShown && actionType === "sell" && (
+        <SuccessSellScreen priceSold={price} />
+      )}
+      {successNotificationShown && actionType === "upgrade" && (
+        <SuccessUpgradeScreen
+          setNotShown={() => setSuccessNotificationShown(false)}
+        />
+      )}
     </AnimatePresence>
   );
 }
+
+export default memo(ActionPopup);

@@ -17,6 +17,8 @@ const config: Config = {
         progressBar: 'url("/imgs/level-full.svg")',
         ratingHeader:
           'url("/imgs/header-bg.png"), linear-gradient(0deg, #3599FF, #3599FF)',
+        successApartmentSell:
+          'url("/imgs/success-sell-bg.png"), linear-gradient(0deg, #007BFC, #007BFC)',
       },
       backgroundSize: {
         ratingHeaderSize: "50%, 100%",

@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from "react";
+import { useState, type PropsWithChildren } from "react";
 import type { Metadata } from "next";
 
 import { Root } from "@/components/Root/Root";
@@ -18,7 +18,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     <StoreProvider>
       <html className="w-full h-full max-h-dvh">
         <body className="bg-bg-blue font-cofo text-white w-full h-full max-h-dvh relative flex justify-center">
-          <div className="w-full max-w-[420px] h-full max-h-dvh relative">
+          <div className="w-full max-w-[420px] h-full max-h-dvh relative overflow-hidden">
             <Root>{children}</Root>
           </div>
         </body>

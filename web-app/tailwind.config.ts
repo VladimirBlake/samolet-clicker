@@ -25,22 +25,12 @@ const config: Config = {
         cofo: "CoFo Sans",
       },
       keyframes: {
-        logoIntro: {
-          "0%": { transform: "translate(-50%, 120px)" },
-          "100%": { transform: "translate(-50%, 270px)" },
-        },
-        buildingImage: {
-          "0%": { transform: "translate(-50%, 0px)", opacity: "1" },
-          "100%": { transform: "translate(-50%, -30px)", opacity: "0" },
-        },
         coinDisappear: {
           "0%": { transform: "translateY(0)", opacity: "1" },
           "100%": { transform: "translateY(-65px)", opacity: "0" },
         },
       },
       animation: {
-        logoIntro: "logoIntro 1.4s ease-out",
-        buildingImage: "buildingImage 1s ease-out",
         coinDisappear: "coinDisappear 1s forwards 0s",
       },
     },

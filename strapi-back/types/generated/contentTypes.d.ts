@@ -369,6 +369,50 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiApartmentApartment extends Struct.CollectionTypeSchema {
+  collectionName: 'apartments';
+  info: {
+    description: '';
+    displayName: 'Apartment';
+    pluralName: 'apartments';
+    singularName: 'apartment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    flatNum: Schema.Attribute.Integer &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 8;
+          min: 1;
+        },
+        number
+      >;
+    isRented: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isSold: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    isUpgraded: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::apartment.apartment'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    rentStart: Schema.Attribute.DateTime;
+    telegram_user: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::telegram-user.telegram-user'
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiPromocodePromocode extends Struct.CollectionTypeSchema {
   collectionName: 'promocodes';
   info: {
@@ -410,6 +454,10 @@ export interface ApiTelegramUserTelegramUser
     draftAndPublish: true;
   };
   attributes: {
+    apartments: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::apartment.apartment'
+    >;
     coinsBalance: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -949,6 +997,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::apartment.apartment': ApiApartmentApartment;
       'api::promocode.promocode': ApiPromocodePromocode;
       'api::telegram-user.telegram-user': ApiTelegramUserTelegramUser;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -26,21 +26,4 @@ const userSlice = createSlice({
 
 export const { userStateLoad } = userSlice.actions;
 
-export const fetchUserData = (): AppThunk => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await fetch(
-        `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/userData`,
-        {
-          method: "GET",
-        }
-      );
-      const responseJson = await response.json();
-      dispatch(userStateLoad(responseJson.userData));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-};
-
 export default userSlice.reducer;

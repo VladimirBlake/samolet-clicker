@@ -7,7 +7,7 @@ import { useEffect, useMemo } from "react";
 import { useAppSelector } from "@/lib/hooks";
 import { formatNumber } from "@/utils/formatNumber";
 import { useDispatch } from "react-redux";
-import { fetchUserData } from "@/lib/features/user/userSlice";
+import { fetchUserData } from "@/lib/thunks/fetchUserData";
 import { Action, ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "@/lib/store";
 

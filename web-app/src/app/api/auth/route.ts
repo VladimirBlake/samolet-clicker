@@ -23,6 +23,9 @@ export async function POST(request: Request) {
               " " +
               (parsedData.user?.lastName || ""),
           telegram_id: userId,
+          first_name: parsedData.user?.firstName,
+          last_name: parsedData.user?.lastName || "",
+          telegram_username: parsedData.user?.username || "",
           photo_url: parsedData.user?.photoUrl,
           coinsBalance: 0,
         };

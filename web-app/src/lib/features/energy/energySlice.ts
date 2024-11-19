@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const energySlice = createSlice({
   name: "energy",
   initialState: {
-    value: 0,
+    value: 5000,
   },
   reducers: {
     collectEnergy: (state) => {

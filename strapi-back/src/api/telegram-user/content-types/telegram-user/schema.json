@@ -35,6 +35,20 @@
     "level": {
       "type": "integer",
       "default": 1
+    },
+    "promocode": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::promocode.promocode"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "telegram_username": {
+      "type": "string"
     }
   }
 }

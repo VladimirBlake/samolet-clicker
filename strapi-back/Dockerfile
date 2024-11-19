@@ -16,4 +16,5 @@ RUN chown -R node:node /opt/app
 USER node
 RUN ["npm", "run", "build"]
 EXPOSE 1337
+EXPOSE 5173
 CMD ["npm", "run", "develop"]

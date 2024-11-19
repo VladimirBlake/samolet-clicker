@@ -32,11 +32,11 @@ services:
       - ./strapi-back/config:/opt/app/config
       - ./strapi-back/src:/opt/app/src
       - ./strapi-back/package.json:/opt/package.json
-      - ./strapi-back/yarn.lock:/opt/yarn.lock
       - ./strapi-back/.env:/opt/app/.env
       - ./strapi-back/public/uploads:/opt/app/public/uploads
     ports:
       - "1337:1337"
+      - "5173:5173"
     depends_on:
       - postgres-db
 volumes:

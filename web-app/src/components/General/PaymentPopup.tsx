@@ -10,7 +10,10 @@ import { spendValue } from "@/lib/features/coins/coinsSlice";
 import { PointerEventHandler, useState } from "react";
 import { motion } from "motion/react";
 import NotificationPopup from "./NotificationPopup";
-import { setMultiplier } from "@/lib/features/multiplier/multiplierSlice";
+import {
+  setMultiplier,
+  setMultiplierWithTimeout,
+} from "@/lib/features/multiplier/multiplierSlice";
 import { addEnergy } from "@/lib/features/energy/energySlice";
 
 export default function PaymentPopup({
@@ -41,7 +44,10 @@ export default function PaymentPopup({
       setNotShown();
       setIsNotificationShown(true);
       if (resourceType === "speed") {
-        dispatch(setMultiplier(Number(paymentPositionTitle?.slice(-1))));
+        setMultiplierWithTimeout(
+          dispatch,
+          Number(paymentPositionTitle?.slice(-1))
+        );
       } else if (resourceType === "energy") {
         dispatch(addEnergy(Number(paymentPositionTitle?.split(" ")[1])));
       }

@@ -369,10 +369,39 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPromocodePromocode extends Struct.CollectionTypeSchema {
+  collectionName: 'promocodes';
+  info: {
+    displayName: 'Promocode';
+    pluralName: 'promocodes';
+    singularName: 'promocode';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::promocode.promocode'
+    > &
+      Schema.Attribute.Private;
+    promocode_id: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTelegramUserTelegramUser
   extends Struct.CollectionTypeSchema {
   collectionName: 'telegram_users';
   info: {
+    description: '';
     displayName: 'TelegramUser';
     pluralName: 'telegram-users';
     singularName: 'telegram-user';
@@ -385,6 +414,11 @@ export interface ApiTelegramUserTelegramUser
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    currentXp: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
+    energy: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<5000>;
+    first_name: Schema.Attribute.String;
+    last_name: Schema.Attribute.String;
+    level: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -392,8 +426,13 @@ export interface ApiTelegramUserTelegramUser
     > &
       Schema.Attribute.Private;
     photo_url: Schema.Attribute.String;
+    promocode: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::promocode.promocode'
+    >;
     publishedAt: Schema.Attribute.DateTime;
     telegram_id: Schema.Attribute.String;
+    telegram_username: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -910,6 +949,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::promocode.promocode': ApiPromocodePromocode;
       'api::telegram-user.telegram-user': ApiTelegramUserTelegramUser;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

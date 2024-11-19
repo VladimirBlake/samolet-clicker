@@ -65,10 +65,6 @@ export function Root(props: PropsWithChildren) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // Coins
-    dispatch(setCoinsValue(10500));
-    // Energy
-    dispatch(setEnergy(5000));
     // Multiplier
     dispatch(setMultiplier(1));
 

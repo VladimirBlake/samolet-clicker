@@ -8,26 +8,8 @@ import { useAppSelector } from "@/lib/hooks";
 import { formatNumber } from "@/utils/formatNumber";
 import { useDispatch } from "react-redux";
 import { fetchUserData } from "@/lib/features/user/userSlice";
-import {
-  Action,
-  AnyAction,
-  ThunkDispatch,
-  UnknownAction,
-} from "@reduxjs/toolkit";
+import { Action, ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "@/lib/store";
-
-function getUsername(user?: User) {
-  if (!user) {
-    return;
-  }
-  let username = "";
-  if (user?.username) {
-    username = user.username;
-  } else {
-    username = user.firstName + (user?.lastName ?? "");
-  }
-  return username;
-}
 
 export default function HeaderApp() {
   const initDataState = useSignal(initData?.state);
@@ -45,19 +27,6 @@ export default function HeaderApp() {
   const energyBalance = useMemo(
     () => formatNumber(energyBalanceRaw),
     [energyBalanceRaw]
-  );
-
-  const username = useMemo(
-    () => getUsername(initDataState?.user),
-    [initDataState]
-  );
-
-  const userPhoto = useMemo(
-    () =>
-      initDataState?.user?.photoUrl
-        ? `url("${initDataState?.user?.photoUrl}")`
-        : "#007BFC",
-    [initDataState]
   );
 
   const dispatch: ThunkDispatch<RootState, any, Action> = useDispatch();

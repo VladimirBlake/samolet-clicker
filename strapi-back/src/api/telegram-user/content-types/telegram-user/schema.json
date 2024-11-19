@@ -4,7 +4,8 @@
   "info": {
     "singularName": "telegram-user",
     "pluralName": "telegram-users",
-    "displayName": "TelegramUser"
+    "displayName": "TelegramUser",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,6 +23,18 @@
     },
     "coinsBalance": {
       "type": "integer"
+    },
+    "energy": {
+      "type": "integer",
+      "default": 5000
+    },
+    "currentXp": {
+      "type": "integer",
+      "default": 0
+    },
+    "level": {
+      "type": "integer",
+      "default": 1
     }
   }
 }

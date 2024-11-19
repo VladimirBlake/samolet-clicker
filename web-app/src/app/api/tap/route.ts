@@ -20,7 +20,7 @@ export async function POST(request: Request) {
           Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ coins, energy, telegram_id: userId }),
+        body: JSON.stringify({ coins, energy, telegram_id: userId, xp: coins }),
       }
     ).then((res) => {
       if (!res.ok) {

@@ -1,3 +1,4 @@
+import { setCurrentBuildingData } from "../features/building/buildingSlice";
 import { setCoinsValue } from "../features/coins/coinsSlice";
 import { setEnergy } from "../features/energy/energySlice";
 import { userStateLoad } from "../features/user/userSlice";
@@ -16,6 +17,12 @@ export const fetchUserData = (): AppThunk => {
       dispatch(userStateLoad(responseJson.userData));
       dispatch(setEnergy(responseJson.userData.energy));
       dispatch(setCoinsValue(responseJson.userData.coinsBalance));
+      dispatch(
+        setCurrentBuildingData({
+          currentXp: responseJson.userData.currentXp,
+          level: responseJson.userData.level,
+        })
+      );
     } catch (err) {
       console.log(err);
     }

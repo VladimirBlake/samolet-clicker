@@ -49,6 +49,12 @@
     },
     "telegram_username": {
       "type": "string"
+    },
+    "apartments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::apartment.apartment",
+      "mappedBy": "telegram_user"
     }
   }
 }

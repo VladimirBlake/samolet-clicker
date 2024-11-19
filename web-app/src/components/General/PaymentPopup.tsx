@@ -35,12 +35,26 @@ export default function PaymentPopup({
   const dispatch = useAppDispatch();
   const [notificationShown, setIsNotificationShown] = useState(false);
 
+  const spendCoinsOnBackend = (coins: number) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/coins`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        coins: -coins,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
   const onClick = () => {
     if (!paymentAmount) {
       return;
     }
     if (currentBalance >= paymentAmount) {
       dispatch(spendValue(paymentAmount));
+      spendCoinsOnBackend(paymentAmount);
       setNotShown();
       setIsNotificationShown(true);
       if (resourceType === "speed") {

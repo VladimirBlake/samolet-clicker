@@ -35,29 +35,35 @@ export default function BuildingData() {
   const dispatch = useAppDispatch();
 
   const handleBuildingPointerup: PointerEventHandler<HTMLDivElement> = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const coinId = Math.random();
-    const newCoinCoordinates: CoinInitData = {
-      id: coinId,
-      x: e.clientX - rect.left - 16,
-      y: e.clientY - rect.top - 15,
-    };
-    setCoins((prev) => [...prev, newCoinCoordinates]);
+    if (energyAvailable > 0) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const coinId = Math.random();
+      const newCoinCoordinates: CoinInitData = {
+        id: coinId,
+        x: e.clientX - rect.left - 16,
+        y: e.clientY - rect.top - 15,
+      };
+      setCoins((prev) => [...prev, newCoinCoordinates]);
 
-    dispatch(incrementCoinsByValue(multiplier));
-    dispatch(increaseXpByAmount(multiplier));
-    dispatch(spendEnergy());
-    setTimer(0);
-    setCoinsCollected((prev) => prev + multiplier);
+      dispatch(incrementCoinsByValue(multiplier));
+      dispatch(increaseXpByAmount(multiplier));
+      dispatch(spendEnergy());
+      setTimer(0);
+      setCoinsCollected((prev) => prev + multiplier);
 
-    animate(scope.current, { x: [0, -4, 0], y: [0, -4, 0] }, { duration: 0.1 });
+      animate(
+        scope.current,
+        { x: [0, -4, 0], y: [0, -4, 0] },
+        { duration: 0.1 }
+      );
 
-    if (hapticFeedback.impactOccurred.isSupported()) {
-      hapticFeedback.impactOccurred("medium");
+      if (hapticFeedback.impactOccurred.isSupported()) {
+        hapticFeedback.impactOccurred("medium");
+      }
+      setTimeout(() => {
+        setCoins((prev) => prev.filter((coin) => coin.id !== coinId));
+      }, 2000);
     }
-    setTimeout(() => {
-      setCoins((prev) => prev.filter((coin) => coin.id !== coinId));
-    }, 2000);
   };
 
   const sendCoinsToBackEnd = (coins: number, energy: number) => {

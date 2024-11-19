@@ -1,0 +1,5 @@
+/**
+ * updateCoins service
+ */
+
+export default () => ({});

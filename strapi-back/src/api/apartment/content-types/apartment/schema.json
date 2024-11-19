@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "apartments",
+  "info": {
+    "singularName": "apartment",
+    "pluralName": "apartments",
+    "displayName": "Apartment",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "flatNum": {
+      "max": 8,
+      "min": 1,
+      "required": false,
+      "type": "integer"
+    },
+    "isRented": {
+      "type": "boolean",
+      "default": false
+    },
+    "rentStart": {
+      "type": "datetime"
+    },
+    "isSold": {
+      "type": "boolean",
+      "default": false
+    },
+    "isUpgraded": {
+      "type": "boolean",
+      "default": false
+    },
+    "telegram_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::telegram-user.telegram-user",
+      "inversedBy": "apartments"
+    }
+  }
+}

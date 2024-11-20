@@ -39,7 +39,8 @@
     "promocode": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::promocode.promocode"
+      "target": "api::promocode.promocode",
+      "inversedBy": "telegram_user"
     },
     "first_name": {
       "type": "string"

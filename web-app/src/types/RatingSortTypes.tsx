@@ -1,6 +1,1 @@
-export enum RatingSortTypes {
-  all,
-  level,
-  balance,
-  apartmentsNum,
-}
+export type RatingSortTypes = "all" | "level" | "balance" | "apartments";

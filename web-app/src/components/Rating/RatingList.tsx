@@ -6,58 +6,12 @@ import door from "../../app/_assets/rating/door.svg";
 import { RatingItem } from "../../types/RatingItem";
 import { Dispatch, SetStateAction } from "react";
 
-const ratingItems: RatingItem[] = [
-  {
-    profilePic,
-    username: "Olesyaaa",
-    stats: {
-      buildingLevel: 7,
-      balance: 16000,
-      apartmentsNum: 8,
-    },
-  },
-  {
-    profilePic,
-    username: "Olesyaaa",
-    stats: {
-      buildingLevel: 7,
-      balance: 16000,
-      apartmentsNum: 8,
-    },
-  },
-  {
-    profilePic,
-    username: "Olesyaaa",
-    stats: {
-      buildingLevel: 7,
-      balance: 16000,
-      apartmentsNum: 8,
-    },
-  },
-  {
-    profilePic,
-    username: "Olesyaaa",
-    stats: {
-      buildingLevel: 7,
-      balance: 16000,
-      apartmentsNum: 8,
-    },
-  },
-  {
-    profilePic,
-    username: "Olesyaaa",
-    stats: {
-      buildingLevel: 7,
-      balance: 16000,
-      apartmentsNum: 8,
-    },
-  },
-];
-
 export default function RatingList({
   setSortSelectionOpened,
+  ratingItems,
 }: {
   setSortSelectionOpened: Dispatch<SetStateAction<boolean>>;
+  ratingItems: RatingItem[];
 }) {
   return (
     <div className="mt-4 px-5">
@@ -72,7 +26,7 @@ export default function RatingList({
               <div className="flex items-center">
                 <img
                   className="size-[42px] object-cover rounded-full"
-                  src={item.profilePic.src}
+                  src={item.profilePicUrl}
                   alt=""
                 />
                 <div className="ml-3">

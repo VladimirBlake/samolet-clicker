@@ -13,6 +13,12 @@
   "attributes": {
     "promocode_id": {
       "type": "string"
+    },
+    "telegram_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::telegram-user.telegram-user",
+      "inversedBy": "promocode"
     }
   }
 }

@@ -11,7 +11,11 @@ import { fetchUserData } from "@/lib/thunks/fetchUserData";
 import { Action, ThunkDispatch } from "@reduxjs/toolkit";
 import { RootState } from "@/lib/store";
 
-export default function HeaderApp() {
+export default function HeaderApp({
+  isInLayout = true,
+}: {
+  isInLayout?: boolean;
+}) {
   const initDataState = useSignal(initData?.state);
   if (!initDataState) {
     return;
@@ -36,7 +40,9 @@ export default function HeaderApp() {
     userPhotoUrl === "" ? "#007BFC" : `url("${userPhotoUrl}")`;
 
   useEffect(() => {
-    dispatch(fetchUserData());
+    if (isInLayout) {
+      dispatch(fetchUserData());
+    }
   }, []);
 
   return (

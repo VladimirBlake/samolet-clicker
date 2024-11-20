@@ -2,10 +2,14 @@
 import ApartmentImage from "@/components/Apartments/ApartmentImage";
 import ControlButtons from "@/components/Apartments/ControlButtons";
 import { Page } from "@/components/Page";
-import { ApartKey, stopRent } from "@/lib/features/apartments/apartmentsSlice";
+import {
+  ApartKey,
+  fetchApartmentState,
+  stopRent,
+} from "@/lib/features/apartments/apartmentsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { AnimatePresence } from "motion/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function SingleApartmentPage({
   params,
@@ -15,6 +19,10 @@ export default function SingleApartmentPage({
   if (["1", "2", "3", "4", "5", "6", "7", "8"].indexOf(params.slug) === -1) {
     return;
   }
+
+  useEffect(() => {
+    dispatch(fetchApartmentState(params.slug));
+  }, []);
 
   const apartmentsData = useAppSelector(
     (state) => state.apartments[params.slug]

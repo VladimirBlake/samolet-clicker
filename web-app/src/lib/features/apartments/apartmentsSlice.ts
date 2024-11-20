@@ -1,3 +1,4 @@
+import { createAppAsyncThunk } from "@/lib/store";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -64,7 +65,30 @@ export const apartmentsSlice = createSlice({
       state[action.payload].isUpgraded = true;
     },
   },
+  extraReducers(builder) {
+    builder.addCase(fetchApartmentState.fulfilled, (state, action) => {
+      state[action.meta.arg] = {
+        isRented: action.payload.apartmentInfo.isRented,
+        isSold: action.payload.apartmentInfo.isSold,
+        isUpgraded: action.payload.apartmentInfo.isUpgraded,
+      };
+    });
+  },
 });
+
+export const fetchApartmentState = createAppAsyncThunk(
+  "apartments/fetchApartment",
+  async (flatNum: ApartKey) => {
+    const response = await fetch(
+      `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/apartmentInfo?flatNum=${flatNum}`,
+      {
+        method: "GET",
+      }
+    );
+    const responseJson = await response.json();
+    return responseJson;
+  }
+);
 
 export const { rentApartment, stopRent, sellApartment, upgradeApartment } =
   apartmentsSlice.actions;

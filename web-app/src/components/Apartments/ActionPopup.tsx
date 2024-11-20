@@ -55,6 +55,19 @@ function ActionPopup({
       .catch((err) => console.log(err));
   };
 
+  const sellApartmentOnBackend = (apartNum: ApartKey) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/sellApartment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        flatNum: apartNum,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
   const [successNotificationShown, setSuccessNotificationShown] =
     useState<boolean>(false);
 
@@ -66,6 +79,7 @@ function ActionPopup({
       case "sell":
         dispatch(sellApartment(apartNum));
         dispatch(incrementCoinsByValue(isApartmentUpgraded ? 12500 : 10000));
+        sellApartmentOnBackend(apartNum);
         setSuccessNotificationShown(true);
         setTimeout(() => setSuccessNotificationShown(false), 2000);
         break;

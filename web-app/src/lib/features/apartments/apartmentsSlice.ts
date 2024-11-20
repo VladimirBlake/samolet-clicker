@@ -1,5 +1,10 @@
-import { createAppAsyncThunk } from "@/lib/store";
-import { createSlice } from "@reduxjs/toolkit";
+import { AppDispatch, RootState } from "@/lib/store";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+export const createAppAsyncThunk = createAsyncThunk.withTypes<{
+  state: RootState;
+  dispatch: AppDispatch;
+}>();
 
 const initialState = {
   "1": {
@@ -44,6 +49,20 @@ const initialState = {
   },
 };
 
+export const fetchApartmentState = createAppAsyncThunk(
+  "apartments/fetchApartment",
+  async (flatNum: ApartKey) => {
+    const response = await fetch(
+      `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/apartmentInfo?flatNum=${flatNum}`,
+      {
+        method: "GET",
+      }
+    );
+    const responseJson = await response.json();
+    return responseJson;
+  }
+);
+
 export type ApartmentsState = (typeof initialState)["1"];
 
 export type ApartKey = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
@@ -75,20 +94,6 @@ export const apartmentsSlice = createSlice({
     });
   },
 });
-
-export const fetchApartmentState = createAppAsyncThunk(
-  "apartments/fetchApartment",
-  async (flatNum: ApartKey) => {
-    const response = await fetch(
-      `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/apartmentInfo?flatNum=${flatNum}`,
-      {
-        method: "GET",
-      }
-    );
-    const responseJson = await response.json();
-    return responseJson;
-  }
-);
 
 export const { rentApartment, stopRent, sellApartment, upgradeApartment } =
   apartmentsSlice.actions;

@@ -28,9 +28,23 @@ export default function SingleApartmentPage({
     (state) => state.apartments[params.slug]
   );
 
+  const stopRentOnBackend = (apartNum: ApartKey) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/stopRent`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        flatNum: apartNum,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
   const dispatch = useAppDispatch();
   const setNotRented = (apartNum: ApartKey) => {
     dispatch(stopRent(apartNum));
+    stopRentOnBackend(apartNum);
   };
 
   return (

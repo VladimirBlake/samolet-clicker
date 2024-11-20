@@ -1,9 +1,9 @@
 /**
- * A set of functions called "actions" for `rent-apartment`
+ * A set of functions called "actions" for `stop-rent`
  */
 
 export default {
-  rent: async (ctx) => {
+  stopRental: async (ctx) => {
     try {
       const { body } = ctx.request;
       let { documentId } = await strapi
@@ -28,7 +28,7 @@ export default {
       let response = await strapi.documents("api::apartment.apartment").update({
         documentId,
         data: {
-          isRented: true,
+          isRented: false,
         },
         status: "published",
       });

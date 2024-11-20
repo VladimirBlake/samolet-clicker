@@ -68,6 +68,19 @@ function ActionPopup({
       .catch((err) => console.log(err));
   };
 
+  const rentApartmentOnBackend = (apartNum: ApartKey) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/rentApartment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        flatNum: apartNum,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
   const [successNotificationShown, setSuccessNotificationShown] =
     useState<boolean>(false);
 
@@ -75,6 +88,7 @@ function ActionPopup({
     switch (actionType) {
       case "rent":
         dispatch(rentApartment(apartNum));
+        rentApartmentOnBackend(apartNum);
         break;
       case "sell":
         dispatch(sellApartment(apartNum));

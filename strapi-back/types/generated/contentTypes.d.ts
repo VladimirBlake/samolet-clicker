@@ -435,6 +435,10 @@ export interface ApiPromocodePromocode extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     promocode_id: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    telegram_user: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::telegram-user.telegram-user'
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

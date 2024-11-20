@@ -48,22 +48,37 @@ export default function PaymentPopup({
       .catch((err) => console.log(err));
   };
 
+  const addEnergyOnBackend = (energy: number) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/addEnergy`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        energy,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
   const onClick = () => {
     if (!paymentAmount) {
       return;
     }
     if (currentBalance >= paymentAmount) {
       dispatch(spendValue(paymentAmount));
-      spendCoinsOnBackend(paymentAmount);
       setNotShown();
       setIsNotificationShown(true);
       if (resourceType === "speed") {
+        spendCoinsOnBackend(paymentAmount);
         setMultiplierWithTimeout(
           dispatch,
           Number(paymentPositionTitle?.slice(-1))
         );
       } else if (resourceType === "energy") {
-        dispatch(addEnergy(Number(paymentPositionTitle?.split(" ")[1])));
+        const energyBought = Number(paymentPositionTitle?.split(" ")[1]);
+        dispatch(addEnergy(energyBought));
+        addEnergyOnBackend(energyBought);
       }
     }
   };

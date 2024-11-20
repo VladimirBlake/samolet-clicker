@@ -1,10 +1,15 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
-import { ApartKey } from "@/lib/features/apartments/apartmentsSlice";
+
+const energyCoinsBindings = {
+  500: 250,
+  1000: 500,
+  2000: 1000,
+};
 
 export async function POST(request: Request) {
   const cookiesStore = await cookies();
-  const requestBody: { energy: number } = await request.json();
+  const requestBody: { energy: 500 | 1000 | 2000 } = await request.json();
   const { energy } = requestBody;
   const jwtToken = cookiesStore.get("jwtToken")?.value || "";
   try {
@@ -21,7 +26,11 @@ export async function POST(request: Request) {
           Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ energy, telegram_id: userId }),
+        body: JSON.stringify({
+          energy,
+          telegram_id: userId,
+          coins: energyCoinsBindings[energy],
+        }),
       }
     ).then((res) => {
       if (!res.ok) {

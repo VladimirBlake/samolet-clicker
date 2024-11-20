@@ -6,7 +6,7 @@ export default {
   async addTaps(ctx) {
     try {
       const { body } = ctx.request;
-      let { documentId, coinsBalance, currentXp, level } = await strapi
+      let { documentId, coinsBalance, currentXp, level, id } = await strapi
         .documents("api::telegram-user.telegram-user")
         .findFirst({
           filters: {
@@ -15,6 +15,9 @@ export default {
             },
           },
         });
+
+      const oldLevel = level;
+
       if (body.xp >= 30) {
         if (level === 7) {
           currentXp = 29;
@@ -36,6 +39,74 @@ export default {
           currentXp += body.xp;
         }
       }
+
+      if (oldLevel < level && level === 7) {
+        await strapi.documents("api::apartment.apartment").create({
+          data: {
+            flatNum: 1,
+            telegram_user: id,
+          },
+          populate: ["telegram_user"],
+          status: "published",
+        });
+        await strapi.documents("api::apartment.apartment").create({
+          data: {
+            flatNum: 2,
+            telegram_user: id,
+          },
+          populate: ["telegram_user"],
+          status: "published",
+        });
+        await strapi.documents("api::apartment.apartment").create({
+          data: {
+            flatNum: 3,
+            telegram_user: id,
+          },
+          populate: ["telegram_user"],
+          status: "published",
+        });
+        await strapi.documents("api::apartment.apartment").create({
+          data: {
+            flatNum: 4,
+            telegram_user: id,
+          },
+          populate: ["telegram_user"],
+          status: "published",
+        });
+        await strapi.documents("api::apartment.apartment").create({
+          data: {
+            flatNum: 5,
+            telegram_user: id,
+          },
+          populate: ["telegram_user"],
+          status: "published",
+        });
+        await strapi.documents("api::apartment.apartment").create({
+          data: {
+            flatNum: 6,
+            telegram_user: id,
+          },
+          populate: ["telegram_user"],
+          status: "published",
+        });
+        await strapi.documents("api::apartment.apartment").create({
+          data: {
+            flatNum: 7,
+            telegram_user: id,
+          },
+          populate: ["telegram_user"],
+          status: "published",
+        });
+        await strapi.documents("api::apartment.apartment").create({
+          data: {
+            flatNum: 8,
+            telegram_user: id,
+          },
+          populate: ["telegram_user"],
+          status: "published",
+        });
+      }
+
       const update = await strapi
         .documents("api::telegram-user.telegram-user")
         .update({

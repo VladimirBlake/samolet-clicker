@@ -49,18 +49,19 @@ export default function SingleApartmentPage({
 
   return (
     <Page back={false}>
-      <div className="w-full h-full bg-[#3496FD] rounded-[30px] pt-5 px-3 pb-5">
-        <div className="flex flex-col h-full max-h-full">
-          <h1 className="text-2xl font-bold text-center">
-            Квартира {params.slug}
-          </h1>
-          <ApartmentImage isUpgraded={apartmentsData.isUpgraded} />
-          <ControlButtons
-            setNotRented={setNotRented}
-            apartmentNum={params.slug}
-            apartmentInfo={apartmentsData}
-          />
-        </div>
+      <div className="w-full h-full bg-[#3496FD] rounded-[30px] pt-5 px-3 pb-5 max-h-[calc(100vh-232px)] flex flex-col">
+        <h1 className="text-2xl font-bold text-center">
+          Квартира {params.slug}
+        </h1>
+        <ApartmentImage
+          className="min-h-0 flex-shrink flex flex-col mt-2"
+          isUpgraded={apartmentsData.isUpgraded}
+        />
+        <ControlButtons
+          setNotRented={setNotRented}
+          apartmentNum={params.slug}
+          apartmentInfo={apartmentsData}
+        />
       </div>
     </Page>
   );

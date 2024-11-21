@@ -28,12 +28,12 @@ export default function BuildingImage({
 }) {
   const levelString: levelStringType = level.toString() as levelStringType;
   return (
-    <div>
+    <div className="flex-shrink flex-grow-0 min-h-0 flex flex-col">
       <img
         ref={scope}
         src={buildingsImgsByLevel[levelString]?.src}
         alt=""
-        className="w-auto h-[226px] mx-auto"
+        className="mx-auto min-h-0 max-h-fit flex-shrink object-contain"
       />
     </div>
   );

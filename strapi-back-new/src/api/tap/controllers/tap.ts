@@ -31,7 +31,7 @@ export default {
       }
 
       if (oldLevel < level && level === 7) {
-        const { documentId: promocodeDocumentId } = await strapi
+        const promocodeLeft = await strapi
           .documents("api::promocode.promocode")
           .findFirst({
             filters: {
@@ -43,9 +43,10 @@ export default {
             },
             populate: ["telegram_user"],
           });
-        if (promocodeDocumentId) {
+
+        if (promocodeLeft?.documentId) {
           await strapi.documents("api::promocode.promocode").update({
-            documentId: promocodeDocumentId,
+            documentId: promocodeLeft.documentId,
             data: {
               telegram_user: {
                 id: id,

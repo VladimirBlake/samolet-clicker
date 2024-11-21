@@ -2,17 +2,17 @@ import MoneyOption from "./MoneyOption";
 
 const options = [
   {
-    title: "Тап х2",
+    title: "Клик х2",
     amount: 2,
     price: 100,
   },
   {
-    title: "Тап х3",
+    title: "Клик х3",
     amount: 3,
     price: 300,
   },
   {
-    title: "Тап х4",
+    title: "Клик х4",
     amount: 4,
     price: 500,
   },

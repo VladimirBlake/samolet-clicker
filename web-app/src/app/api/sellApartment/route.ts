@@ -8,6 +8,7 @@ export async function POST(request: Request) {
   const { flatNum } = requestBody;
   const jwtToken = cookiesStore.get("jwtToken")?.value || "";
   try {
+    let response = {};
     const decoded: jwt.JwtPayload = jwt.verify(
       jwtToken,
       process.env.JWT_SECRET as string
@@ -23,13 +24,17 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({ flatNum, telegram_id: userId }),
       }
-    ).then((res) => {
-      if (!res.ok) {
-        throw Error("Error in fetch request");
-      }
-      console.log(res.body);
-    });
-    return new Response("Apart sold", {
+    )
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Error in fetch request");
+        }
+        return res.json();
+      })
+      .then((res) => {
+        response = { data: res };
+      });
+    return new Response(JSON.stringify(response), {
       status: 200,
     });
   } catch (err) {

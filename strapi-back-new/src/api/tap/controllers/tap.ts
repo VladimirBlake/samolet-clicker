@@ -43,16 +43,18 @@ export default {
             },
             populate: ["telegram_user"],
           });
-        await strapi.documents("api::promocode.promocode").update({
-          documentId: promocodeDocumentId,
-          data: {
-            telegram_user: {
-              id: id,
+        if (promocodeDocumentId) {
+          await strapi.documents("api::promocode.promocode").update({
+            documentId: promocodeDocumentId,
+            data: {
+              telegram_user: {
+                id: id,
+              },
             },
-          },
-          populate: ["telegram_user"],
-          status: "published",
-        });
+            populate: ["telegram_user"],
+            status: "published",
+          });
+        }
 
         await strapi.documents("api::apartment.apartment").create({
           data: {

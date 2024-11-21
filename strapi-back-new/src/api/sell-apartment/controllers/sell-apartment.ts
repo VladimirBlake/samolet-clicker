@@ -25,6 +25,24 @@ export default {
             },
           },
         });
+
+      const { apartments } = await strapi
+        .documents("api::telegram-user.telegram-user")
+        .findOne({
+          documentId: telegram_user.documentId,
+          populate: ["apartments"],
+        });
+
+      const notSoldApartments = apartments.filter(
+        (apartment) => !apartment.isSold
+      );
+      let optionalBonus = 0;
+      if (notSoldApartments.length === 4) {
+        optionalBonus = 500;
+      } else if (notSoldApartments.length === 1) {
+        optionalBonus = 900;
+      }
+
       let response = await strapi.documents("api::apartment.apartment").update({
         documentId,
         data: {
@@ -32,17 +50,20 @@ export default {
         },
         status: "published",
       });
+
       let coinsSpendingResponse = await strapi
         .documents("api::telegram-user.telegram-user")
         .update({
           documentId: telegram_user.documentId,
           data: {
             coinsBalance:
-              telegram_user.coinsBalance + (isUpgraded ? 12500 : 10000),
+              telegram_user.coinsBalance +
+              (isUpgraded ? 12500 : 10000) +
+              optionalBonus,
           },
           status: "published",
         });
-      ctx.body = "ok";
+      ctx.body = { data: { bonus: optionalBonus } };
     } catch (err) {
       ctx.body = err;
     }

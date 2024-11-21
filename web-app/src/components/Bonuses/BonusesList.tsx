@@ -10,7 +10,7 @@ export default function BonusesList() {
       />
       <MoneyOption
         useHeight={false}
-        title={"Проданы 10 квартир"}
+        title={"Проданы 8 квартир"}
         moneyValue={900}
       />
       <MoneyOption

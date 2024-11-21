@@ -63,7 +63,7 @@ function ActionPopup({
         flatNum: apartNum,
       }),
     })
-      .then((resp) => resp.text())
+      .then((resp) => resp.json())
       .then((resp) => console.log(resp))
       .catch((err) => console.log(err));
   };

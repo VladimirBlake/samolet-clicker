@@ -48,7 +48,7 @@ export default function ImprovementPopup({
               <img src={closingCross.src} alt="" />
             </button>
           </div>
-          <HeaderApp />
+          <HeaderApp isInLayout={false} />
           {improvementType === "energy" ? (
             <EnergyList onListItemClick={selectProductToBuy} />
           ) : (

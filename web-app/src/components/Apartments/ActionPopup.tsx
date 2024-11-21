@@ -41,6 +41,46 @@ function ActionPopup({
 }) {
   const dispatch = useDispatch();
   const currentBalance = useAppSelector((state) => state.coins.value);
+
+  const upgradeApartmentOnBackend = (apartNum: ApartKey) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/upgradeApartment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        flatNum: apartNum,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
+  const sellApartmentOnBackend = (apartNum: ApartKey) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/sellApartment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        flatNum: apartNum,
+      }),
+    })
+      .then((resp) => resp.json())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
+  const rentApartmentOnBackend = (apartNum: ApartKey) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/rentApartment`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        flatNum: apartNum,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
   const [successNotificationShown, setSuccessNotificationShown] =
     useState<boolean>(false);
 
@@ -48,10 +88,12 @@ function ActionPopup({
     switch (actionType) {
       case "rent":
         dispatch(rentApartment(apartNum));
+        rentApartmentOnBackend(apartNum);
         break;
       case "sell":
         dispatch(sellApartment(apartNum));
         dispatch(incrementCoinsByValue(isApartmentUpgraded ? 12500 : 10000));
+        sellApartmentOnBackend(apartNum);
         setSuccessNotificationShown(true);
         setTimeout(() => setSuccessNotificationShown(false), 2000);
         break;
@@ -59,6 +101,7 @@ function ActionPopup({
         if (currentBalance >= 2500) {
           dispatch(upgradeApartment(apartNum));
           dispatch(spendValue(2500));
+          upgradeApartmentOnBackend(apartNum);
           setSuccessNotificationShown(true);
         }
         break;

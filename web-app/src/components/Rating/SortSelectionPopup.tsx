@@ -4,10 +4,10 @@ import { Dispatch, MouseEventHandler, SetStateAction } from "react";
 import { AnimatePresence, motion } from "motion/react";
 
 const sortTypesTitles = {
-  [RatingSortTypes.all.toString()]: "Все",
-  [RatingSortTypes.level.toString()]: "По уровню здания",
-  [RatingSortTypes.balance.toString()]: "По накопленному капиталу",
-  [RatingSortTypes.apartmentsNum.toString()]: "По количеству квартир",
+  all: "Все",
+  level: "По уровню здания",
+  balance: "По накопленному капиталу",
+  apartments: "По количеству квартир",
 };
 
 export default function SortSelectionPopup({
@@ -55,11 +55,11 @@ export default function SortSelectionPopup({
             <div className="flex flex-col mt-3 gap-y-2.5">
               {Object.keys(sortTypesTitles).map((key, index) => (
                 <SortOption
-                  isSelected={selectedSort.toString() === key}
+                  isSelected={selectedSort === key.toString()}
                   setSortSelected={setSelectedSort}
                   key={index}
-                  title={sortTypesTitles[key]}
-                  sortType={Number(key)}
+                  title={sortTypesTitles[key as RatingSortTypes]}
+                  sortType={key as RatingSortTypes}
                 />
               ))}
             </div>

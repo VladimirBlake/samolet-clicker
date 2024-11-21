@@ -1,5 +1,11 @@
 "use client";
-import React, { PointerEventHandler, useEffect, useState } from "react";
+import React, {
+  PointerEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ProgressBar from "./ProgressBar";
 import levelOneBuilding from "../../app/_assets/main-page/buildings/level1.png";
 import CoinAnimated from "./CoinAnimated";
@@ -19,34 +25,82 @@ type CoinInitData = {
 
 export default function BuildingData() {
   const [coins, setCoins] = useState<CoinInitData[]>([]);
+  const [coinsCollected, setCoinsCollected] = useState<number>(0);
+  const coinsCollectedRef = useRef<number>(0);
+  const [timer, setTimer] = useState<number>(0);
   const [scope, animate] = useAnimate();
   const multiplier = useAppSelector((state) => state.multiplier.value);
+  const energyAvailable = useAppSelector((state) => state.energy.value);
   const buildingLevel = useAppSelector((state) => state.building.level);
   const dispatch = useAppDispatch();
 
   const handleBuildingPointerup: PointerEventHandler<HTMLDivElement> = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const coinId = Math.random();
-    const newCoinCoordinates: CoinInitData = {
-      id: coinId,
-      x: e.clientX - rect.left - 16,
-      y: e.clientY - rect.top - 15,
-    };
-    setCoins((prev) => [...prev, newCoinCoordinates]);
+    if (energyAvailable > 0) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const coinId = Math.random();
+      const newCoinCoordinates: CoinInitData = {
+        id: coinId,
+        x: e.clientX - rect.left - 16,
+        y: e.clientY - rect.top - 15,
+      };
+      setCoins((prev) => [...prev, newCoinCoordinates]);
 
-    dispatch(incrementCoinsByValue(multiplier));
-    dispatch(increaseXpByAmount(multiplier));
-    dispatch(spendEnergy());
+      dispatch(incrementCoinsByValue(multiplier));
+      dispatch(increaseXpByAmount(multiplier));
+      dispatch(spendEnergy());
+      setTimer(0);
+      setCoinsCollected((prev) => prev + multiplier);
 
-    animate(scope.current, { x: [0, -4, 0], y: [0, -4, 0] }, { duration: 0.1 });
+      animate(
+        scope.current,
+        { x: [0, -4, 0], y: [0, -4, 0] },
+        { duration: 0.1 }
+      );
 
-    if (hapticFeedback.impactOccurred.isSupported()) {
-      hapticFeedback.impactOccurred("medium");
+      if (hapticFeedback.impactOccurred.isSupported()) {
+        hapticFeedback.impactOccurred("medium");
+      }
+      setTimeout(() => {
+        setCoins((prev) => prev.filter((coin) => coin.id !== coinId));
+      }, 2000);
     }
-    setTimeout(() => {
-      setCoins((prev) => prev.filter((coin) => coin.id !== coinId));
-    }, 2000);
   };
+
+  const sendCoinsToBackEnd = (coins: number, energy: number) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/tap`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        coins,
+        energy,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    coinsCollectedRef.current = coinsCollected;
+  }, [coinsCollected]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => prev + 100);
+    }, 100);
+
+    return () => {
+      clearInterval(interval);
+      sendCoinsToBackEnd(coinsCollectedRef.current, energyAvailable);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (coinsCollected > 0 && timer > 2000) {
+      sendCoinsToBackEnd(coinsCollected, energyAvailable);
+      setCoinsCollected(0);
+    }
+  }, [timer]);
 
   return (
     <>

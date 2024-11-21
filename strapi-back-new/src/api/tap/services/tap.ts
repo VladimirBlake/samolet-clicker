@@ -1,0 +1,5 @@
+/**
+ * tap service
+ */
+
+export default () => ({});

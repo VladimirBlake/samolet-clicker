@@ -1,0 +1,42 @@
+services:
+  next-app:
+    build:
+      context: ./web-app
+      dockerfile: Dockerfile.prod
+    container_name: "samolet-next-app"
+    restart: always
+    command: ["npm", "start"]
+  nginx:
+    build: ./nginx
+    container_name: "samolet-nginx"
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - next-app
+    restart: always
+  postgres-db:
+    image: postgres:16.3-alpine3.20
+    container_name: "samolet-db"
+    restart: always
+    env_file: .env
+    volumes:
+      - strapi-samolet-data-3:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+  strapi:
+    build:
+      context: ./strapi-back-new
+      dockerfile: Dockerfile.prod
+    container_name: "samolet-strapi"
+    command: ["npm", "run", "start"]
+    env_file: "./strapi-back-new/.env"
+    restart: unless-stopped
+    ports:
+      - "1337:1337"
+      - "5173:5173"
+    depends_on:
+      - postgres-db
+volumes:
+  strapi-samolet-data-3:
+#TODO: Add and install strapi

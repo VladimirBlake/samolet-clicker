@@ -10,7 +10,10 @@ import { spendValue } from "@/lib/features/coins/coinsSlice";
 import { PointerEventHandler, useState } from "react";
 import { motion } from "motion/react";
 import NotificationPopup from "./NotificationPopup";
-import { setMultiplier } from "@/lib/features/multiplier/multiplierSlice";
+import {
+  setMultiplier,
+  setMultiplierWithTimeout,
+} from "@/lib/features/multiplier/multiplierSlice";
 import { addEnergy } from "@/lib/features/energy/energySlice";
 
 export default function PaymentPopup({
@@ -32,6 +35,32 @@ export default function PaymentPopup({
   const dispatch = useAppDispatch();
   const [notificationShown, setIsNotificationShown] = useState(false);
 
+  const spendCoinsOnBackend = (coins: number) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/coins`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        coins: -coins,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
+  const addEnergyOnBackend = (energy: number) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/addEnergy`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        energy,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
   const onClick = () => {
     if (!paymentAmount) {
       return;
@@ -41,9 +70,15 @@ export default function PaymentPopup({
       setNotShown();
       setIsNotificationShown(true);
       if (resourceType === "speed") {
-        dispatch(setMultiplier(Number(paymentPositionTitle?.slice(-1))));
+        spendCoinsOnBackend(paymentAmount);
+        setMultiplierWithTimeout(
+          dispatch,
+          Number(paymentPositionTitle?.slice(-1))
+        );
       } else if (resourceType === "energy") {
-        dispatch(addEnergy(Number(paymentPositionTitle?.split(" ")[1])));
+        const energyBought = Number(paymentPositionTitle?.split(" ")[1]);
+        dispatch(addEnergy(energyBought));
+        addEnergyOnBackend(energyBought);
       }
     }
   };

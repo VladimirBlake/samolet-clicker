@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_messages",
+  "info": {
+    "singularName": "user-message",
+    "pluralName": "user-messages",
+    "displayName": "UserMessage"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "message": {
+      "type": "text"
+    },
+    "telegram_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::telegram-user.telegram-user"
+    }
+  }
+}

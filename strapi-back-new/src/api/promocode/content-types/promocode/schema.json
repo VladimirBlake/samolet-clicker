@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "promocodes",
+  "info": {
+    "singularName": "promocode",
+    "pluralName": "promocodes",
+    "displayName": "Promocode"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "promocode_id": {
+      "type": "string"
+    },
+    "telegram_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::telegram-user.telegram-user",
+      "mappedBy": "promocode"
+    }
+  }
+}

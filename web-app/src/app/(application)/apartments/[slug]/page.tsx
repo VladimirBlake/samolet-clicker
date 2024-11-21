@@ -2,10 +2,14 @@
 import ApartmentImage from "@/components/Apartments/ApartmentImage";
 import ControlButtons from "@/components/Apartments/ControlButtons";
 import { Page } from "@/components/Page";
-import { ApartKey, stopRent } from "@/lib/features/apartments/apartmentsSlice";
+import {
+  ApartKey,
+  fetchApartmentState,
+  stopRent,
+} from "@/lib/features/apartments/apartmentsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { AnimatePresence } from "motion/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function SingleApartmentPage({
   params,
@@ -16,13 +20,31 @@ export default function SingleApartmentPage({
     return;
   }
 
+  useEffect(() => {
+    dispatch(fetchApartmentState(params.slug));
+  }, []);
+
   const apartmentsData = useAppSelector(
     (state) => state.apartments[params.slug]
   );
 
+  const stopRentOnBackend = (apartNum: ApartKey) => {
+    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/stopRent`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        flatNum: apartNum,
+      }),
+    })
+      .then((resp) => resp.text())
+      .then((resp) => console.log(resp))
+      .catch((err) => console.log(err));
+  };
+
   const dispatch = useAppDispatch();
   const setNotRented = (apartNum: ApartKey) => {
     dispatch(stopRent(apartNum));
+    stopRentOnBackend(apartNum);
   };
 
   return (

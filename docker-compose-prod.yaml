@@ -27,7 +27,7 @@ services:
   strapi:
     build:
       context: ./strapi-back-new
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     container_name: "samolet-strapi"
     command: ["npm", "run", "start"]
     env_file: "./strapi-back-new/.env"

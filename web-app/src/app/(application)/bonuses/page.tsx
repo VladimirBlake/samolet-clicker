@@ -22,13 +22,13 @@ export default function BonusesPage() {
         <Improvement
           onClick={() => setPopUpState("energy")}
           title="Энергия"
-          description="Увеличь энергию, тапай и строй новые дома"
+          description="Дополнительная энергия, чтобы кликать дольше"
           type="energy"
         />
         <Improvement
           onClick={() => setPopUpState("speed")}
           title="Ускорение"
-          description=" Ускорь строительство и скорее перейди на новый уровень"
+          description="Активируйте множитель, и получайте больше очков за клик"
           type="speed"
         />
         <BonusesList />

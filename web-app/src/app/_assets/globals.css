@@ -13,6 +13,11 @@
   user-select: none;
 }
 
+:root {
+  touch-action: pan-x pan-y;
+  height: 100%;
+}
+
 @layer utilities {
   .user-image-hexagon {
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);

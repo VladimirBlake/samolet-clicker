@@ -37,7 +37,9 @@ export default function HeaderApp({
   const userNameRedux = useAppSelector((state) => state.user.username);
   const userPhotoUrl = useAppSelector((state) => state.user.photoUrl);
   const userPhotoBg =
-    userPhotoUrl === "" ? "#007BFC" : `url("${userPhotoUrl}")`;
+    userPhotoUrl === ""
+      ? "#007BFC"
+      : `center / 46px 46px url("${userPhotoUrl}")`;
 
   useEffect(() => {
     if (isInLayout) {

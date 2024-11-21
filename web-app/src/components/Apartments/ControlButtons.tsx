@@ -101,7 +101,7 @@ export default function ControlButtons({
   return (
     <>
       {apartmentInfo.isRented && (
-        <div>
+        <div className="h-[116px] flex-shrink-0">
           <p className="text-[#89C5FF] font-bold text-xl text-center mt-3">
             Вы сдали эту квартиру
           </p>
@@ -113,7 +113,7 @@ export default function ControlButtons({
         </div>
       )}
       {apartmentInfo.isSold && (
-        <div>
+        <div className="h-[116px] flex-shrink-0">
           <p className="text-[#89C5FF] font-bold text-xl text-center mt-8">
             Вы продали эту квартиру
           </p>
@@ -122,13 +122,15 @@ export default function ControlButtons({
       {apartmentInfo.isUpgraded &&
         !apartmentInfo.isRented &&
         !apartmentInfo.isSold && (
-          <div className="grid grid-cols-2 gap-2 mt-8">
+          <div className="flex flex-wrap gap-2 h-[116px] flex-shrink-0 mt-auto">
             <ApartmentButton
+              className="w-[calc(50%-4px)] self-center"
               onClick={openRentPopup}
               title="Сдать"
               icon={rentIcon}
             />
             <ApartmentButton
+              className="w-[calc(50%-4px)] self-center"
               onClick={openSellPopup}
               title="Продать"
               icon={sellIcon}
@@ -138,20 +140,22 @@ export default function ControlButtons({
       {!apartmentInfo.isRented &&
         !apartmentInfo.isUpgraded &&
         !apartmentInfo.isSold && (
-          <div className="grid grid-cols-2 gap-2">
+          <div className="flex flex-wrap gap-2 h-[116px] flex-shrink-0 mt-auto">
             <ApartmentButton
+              className="w-[calc(50%-4px)]"
               onClick={openRentPopup}
               title="Сдать"
               icon={rentIcon}
             />
             <ApartmentButton
+              className="w-[calc(50%-4px)]"
               onClick={openSellPopup}
               title="Продать"
               icon={sellIcon}
             />
             <ApartmentButton
               onClick={openUpgradedPopup}
-              className="col-span-2"
+              className="w-full"
               title="Прокачать"
               icon={upgradeIcon}
             />

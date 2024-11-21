@@ -103,15 +103,18 @@ export default function BuildingData() {
   }, [timer]);
 
   return (
-    <>
+    <div className="h-full max-h-[calc(100%-75px)] flex-shrink flex-col flex min-h-0">
       <p className="text-center text-sm font-medium">{buildingLevel} уровень</p>
       <ProgressBar />
-      <div onPointerUp={handleBuildingPointerup} className="px-2 mt-5 relative">
+      <div
+        onPointerUp={handleBuildingPointerup}
+        className="px-2 mt-5 relative min-h-0 flex-shrink flex-grow-0 flex flex-col"
+      >
         <BuildingImage scope={scope} level={buildingLevel} />
         {coins.map((coin) => (
           <CoinAnimated key={coin.id} xStart={coin.x} yStart={coin.y} />
         ))}
       </div>
-    </>
+    </div>
   );
 }

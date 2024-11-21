@@ -6,7 +6,7 @@ export default function NotAvailable() {
     <div className="w-full h-full absolute bg-white/5 backdrop-blur-md left-0 top-0 z-0">
       <NotificationPopup
         title="Вам недоступен раздел с квартирами"
-        description="вы сможете продавать и сдавать квартиры, когда достигнете последнего уровня - построите дома"
+        description="вы сможете продавать и сдавать квартиры, когда достигнете последнего уровня"
         icon={coins}
       />
     </div>

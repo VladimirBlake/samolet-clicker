@@ -4,6 +4,7 @@ export default function BonusesList() {
   return (
     <>
       <MoneyOption
+        href={"https://t.me/+9PN-sUcba0ViMzcy"}
         useHeight={false}
         title={"Подписаться на ТГ-канал"}
         moneyValue={200}

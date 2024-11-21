@@ -4,6 +4,7 @@ import { type PropsWithChildren, useEffect } from "react";
 import {
   initData,
   miniApp,
+  swipeBehavior,
   useLaunchParams,
   useSignal,
 } from "@telegram-apps/sdk-react";
@@ -67,6 +68,9 @@ export function Root(props: PropsWithChildren) {
   useEffect(() => {
     // Multiplier
     dispatch(setMultiplier(1));
+    if (swipeBehavior.isSupported()) {
+      swipeBehavior.disableVertical();
+    }
 
     const interval = setInterval(() => {
       dispatch(collectEnergy());

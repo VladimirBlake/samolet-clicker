@@ -50,7 +50,7 @@ export default function HeaderApp({
       <div className="flex">
         <div className="size-[50px] bg-white user-image-hexagon flex items-center justify-center">
           <div
-            style={{ background: userPhotoBg, backgroundSize: "46px" }}
+            style={{ background: userPhotoBg, backgroundSize: "46px 46px" }}
             className="size-[46px] user-image-hexagon bg-[length:50px]"
           ></div>
         </div>

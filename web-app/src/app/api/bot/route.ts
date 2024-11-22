@@ -19,7 +19,9 @@ const bot = new Bot(token);
 bot.use(menu);
 bot.command("start", async (ctx) => {
   await ctx.reply(
-    "Привет!👋 Рады приветствовать тебя в чат-боте компании «Самолет»",
+    `Привет!👋
+Рады приветствовать тебя в чат-боте компании «Самолет». 
+Тут ты можешь получить промокод на покупку квартиры, по достижению 7го уровня игры. Ничего не жди, сразу начинай играть 🤘`,
     {
       reply_markup: menu,
     }
@@ -39,8 +41,11 @@ bot.command("start", async (ctx) => {
       `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/handle-start-command`,
       {
         method: "POST",
-        headers: { Authorization: `bearer ${process.env.STRAPI_TOKEN}` },
-        body: JSON.stringify({ ...userData }),
+        headers: {
+          Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
       }
     );
   } catch (err) {}

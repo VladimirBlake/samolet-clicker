@@ -8,7 +8,7 @@ export default function RatingPageLayout({ children }: PropsWithChildren) {
       <div className="pb-[70px] overflow-scroll h-[calc(100%-120px)]">
         {children}
       </div>
-      <div className="px-5 absolute bottom-7 w-full">
+      <div className="px-5 fixed bottom-7 w-full">
         <NavigationApp />
       </div>
     </div>

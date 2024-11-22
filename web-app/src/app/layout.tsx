@@ -1,5 +1,5 @@
 import { useState, type PropsWithChildren } from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 import { Root } from "@/components/Root/Root";
 
@@ -11,6 +11,12 @@ import StoreProvider from "./StoreProvider";
 export const metadata: Metadata = {
   title: "Your Application Title Goes Here",
   description: "Your application description goes here",
+};
+export const viewport: Viewport = {
+  initialScale: 1,
+  width: "device-width",
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default async function RootLayout({ children }: PropsWithChildren) {

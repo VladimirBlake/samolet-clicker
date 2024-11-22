@@ -15,8 +15,11 @@ import {
 } from "@/lib/features/coins/coinsSlice";
 import { useAppSelector } from "@/lib/hooks";
 import SuccessSellScreen from "./SuccessSellScreen";
-import { memo, useState } from "react";
+import { memo, PointerEventHandler, useState } from "react";
 import SuccessUpgradeScreen from "./SuccessUpgradeScreen";
+import NotificationBackground from "../General/NotificationBackground";
+import NotificationPopup from "../General/NotificationPopup";
+import coin from "../../app/_assets/layout/coin.png";
 
 function ActionPopup({
   title,
@@ -41,6 +44,8 @@ function ActionPopup({
 }) {
   const dispatch = useDispatch();
   const currentBalance = useAppSelector((state) => state.coins.value);
+
+  const [notEnoughBalanceShown, setNotEnoughBalanceShown] = useState(false);
 
   const upgradeApartmentOnBackend = (apartNum: ApartKey) => {
     fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/upgradeApartment`, {
@@ -81,6 +86,15 @@ function ActionPopup({
       .catch((err) => console.log(err));
   };
 
+  const onNotificationBalanceBgClick: PointerEventHandler<HTMLDivElement> = (
+    e
+  ) => {
+    const target = e.target as Element;
+    if (!target.closest("div[data-element=notification-popup]")) {
+      setNotEnoughBalanceShown(false);
+    }
+  };
+
   const [successNotificationShown, setSuccessNotificationShown] =
     useState<boolean>(false);
 
@@ -103,6 +117,8 @@ function ActionPopup({
           dispatch(spendValue(2500));
           upgradeApartmentOnBackend(apartNum);
           setSuccessNotificationShown(true);
+        } else {
+          setNotEnoughBalanceShown(true);
         }
         break;
       default:
@@ -135,6 +151,18 @@ function ActionPopup({
         <SuccessUpgradeScreen
           setNotShown={() => setSuccessNotificationShown(false)}
         />
+      )}
+      {notEnoughBalanceShown && (
+        <NotificationBackground
+          className="z-50"
+          onClick={onNotificationBalanceBgClick}
+        >
+          <NotificationPopup
+            icon={coin}
+            title={"Вам не хватает денег для покупки"}
+            description="Возвращайтесь на главный экран и заработайте"
+          />
+        </NotificationBackground>
       )}
     </AnimatePresence>
   );

@@ -5,7 +5,7 @@ export const fetchCache = "force-no-store";
 import { Bot, webhookCallback } from "grammy";
 import { Menu } from "@grammyjs/menu";
 
-const token = process.env.TELEGRAM_API_TOKEN;
+const token = process.env.TELERGAM_API_TOKEN;
 
 if (!token)
   throw new Error("TELEGRAM_API_TOKEN environment variable not found.");

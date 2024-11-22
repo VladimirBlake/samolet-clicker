@@ -113,7 +113,7 @@ export default function ControlButtons({
         </div>
       )}
       {apartmentInfo.isSold && (
-        <div className="h-[116px] flex-shrink-0">
+        <div className="h-[116px] flex-shrink-0 flex items-center justify-center">
           <p className="text-[#89C5FF] font-bold text-xl text-center mt-8">
             Вы продали эту квартиру
           </p>

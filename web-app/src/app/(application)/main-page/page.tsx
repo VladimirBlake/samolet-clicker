@@ -56,7 +56,7 @@ export default function MainPage() {
             exit={{ opacity: 0 }}
             animate={{ opacity: 1, transition: { duration: 0.25 } }}
             initial={{ opacity: 0 }}
-            className="absolute w-full h-full left-0 top-0 bg-white/5 backdrop-blur-md"
+            className="absolute w-full h-full left-0 top-0 bg-white/5 backdrop-blur-md z-40"
           >
             <NotificationPopup
               icon={coins}

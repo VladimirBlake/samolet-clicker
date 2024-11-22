@@ -15,6 +15,7 @@ import {
   setMultiplierWithTimeout,
 } from "@/lib/features/multiplier/multiplierSlice";
 import { addEnergy } from "@/lib/features/energy/energySlice";
+import NotificationBackground from "./NotificationBackground";
 
 export default function PaymentPopup({
   isShown,
@@ -30,10 +31,13 @@ export default function PaymentPopup({
   paymentAmount?: number;
 }) {
   const currentBalance = useAppSelector((state) => state.coins.value);
+  const currentEnergy = useAppSelector((state) => state.energy.value);
   const currentBalanceFormatted = formatNumber(currentBalance);
 
   const dispatch = useAppDispatch();
   const [notificationShown, setIsNotificationShown] = useState(false);
+  const [notEnoughBalanceShown, setNotEnoughBalanceShown] = useState(false);
+  const [tooMuchEnergyShown, setTooMuchEnergyShown] = useState(false);
 
   const spendCoinsOnBackend = (coins: number) => {
     fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/coins`, {
@@ -67,9 +71,9 @@ export default function PaymentPopup({
     }
     if (currentBalance >= paymentAmount) {
       dispatch(spendValue(paymentAmount));
-      setNotShown();
-      setIsNotificationShown(true);
       if (resourceType === "speed") {
+        setNotShown();
+        setIsNotificationShown(true);
         spendCoinsOnBackend(paymentAmount);
         setMultiplierWithTimeout(
           dispatch,
@@ -77,9 +81,17 @@ export default function PaymentPopup({
         );
       } else if (resourceType === "energy") {
         const energyBought = Number(paymentPositionTitle?.split(" ")[1]);
-        dispatch(addEnergy(energyBought));
-        addEnergyOnBackend(energyBought);
+        if (currentEnergy + energyBought > 5000) {
+          setTooMuchEnergyShown(true);
+        } else {
+          dispatch(addEnergy(energyBought));
+          setNotShown();
+          setIsNotificationShown(true);
+          addEnergyOnBackend(energyBought);
+        }
       }
+    } else {
+      setNotEnoughBalanceShown(true);
     }
   };
 
@@ -90,16 +102,55 @@ export default function PaymentPopup({
     }
   };
 
+  const onNotificationBalanceBgClick: PointerEventHandler<HTMLDivElement> = (
+    e
+  ) => {
+    const target = e.target as Element;
+    if (!target.closest("div[data-element=notification-popup]")) {
+      setNotEnoughBalanceShown(false);
+    }
+  };
+
+  const onNotificationEnergyBgClick: PointerEventHandler<HTMLDivElement> = (
+    e
+  ) => {
+    const target = e.target as Element;
+    if (!target.closest("div[data-element=notification-popup]")) {
+      setTooMuchEnergyShown(false);
+    }
+  };
+
+  let multiplier: string | undefined = "";
+  let multiplierInWords: string | undefined = "";
+  if (resourceType === "speed") {
+    multiplier = paymentPositionTitle?.slice(-1);
+    switch (multiplier) {
+      case "2":
+        multiplierInWords = "два";
+        break;
+      case "3":
+        multiplierInWords = "три";
+        break;
+      case "4":
+        multiplierInWords = "четыре";
+        break;
+      default:
+        multiplierInWords = "";
+    }
+  }
+
   const notificationTitle =
     resourceType === "energy"
-      ? `Вы приобрели ${paymentPositionTitle}`
+      ? `Энергия увеличивается на ${Number(
+          paymentPositionTitle?.split(" ")[1]
+        )}`
       : `У вас теперь ${paymentPositionTitle?.toLowerCase()}`;
   const notificationDescription =
     resourceType === "energy"
-      ? "текст для энергии"
+      ? "у вас больше времени для строительства"
       : `в течение ${
           paymentPositionTitle?.slice(-1) === "2" ? "5" : "10"
-        } минут ваш тап принесет вам в два раза больше монет`;
+        } минут ваш тап принесет вам в ${multiplierInWords} раза больше монет`;
 
   return (
     <AnimatePresence>
@@ -146,6 +197,30 @@ export default function PaymentPopup({
             icon={resourceType === "energy" ? energy : coin}
           />
         </motion.div>
+      )}
+      {notEnoughBalanceShown && (
+        <NotificationBackground
+          onClick={onNotificationBalanceBgClick}
+          className="z-50"
+        >
+          <NotificationPopup
+            icon={coin}
+            title={"Вам не хватает денег для покупки"}
+            description="Возвращайтесь на главный экран и заработайте"
+          />
+        </NotificationBackground>
+      )}
+      {tooMuchEnergyShown && (
+        <NotificationBackground
+          className="z-50"
+          onClick={onNotificationEnergyBgClick}
+        >
+          <NotificationPopup
+            icon={energy}
+            title={"На данный момент у вас максимальный уровень энергии"}
+            description="Покупка актуальна, когда энергии не хватает для кликов"
+          />
+        </NotificationBackground>
       )}
     </AnimatePresence>
   );

@@ -492,6 +492,7 @@ export interface ApiTelegramUserTelegramUser
       'oneToMany',
       'api::apartment.apartment'
     >;
+    chat_id: Schema.Attribute.String;
     coinsBalance: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

@@ -1,5 +1,5 @@
+// @ts-nocheck
 // import type { Core } from '@strapi/strapi';
-
 import { Bot } from "grammy";
 
 export default {
@@ -15,12 +15,20 @@ export default {
         return next();
       }
 
-      if (context.action === "create") {
-        const bot = new Bot(strapi.config.get("server.telergamToken"));
-        await bot.api.sendMessage(
-          406345426,
-          JSON.stringify(context.params.data)
-        );
+      if (context.action === "create" && context.params.data?.telegram_user) {
+        const { chat_id } = await strapi
+          .documents("api::telegram-user.telegram-user")
+          .findOne({
+            documentId: context.params.data.telegram_user.connect[0].documentId,
+            fields: ["chat_id"],
+          });
+        if (chat_id) {
+          const bot = new Bot(strapi.config.get("server.telergamToken"));
+          await bot.api.sendMessage(
+            Number(chat_id),
+            JSON.stringify(context.params.data.message)
+          );
+        }
       }
 
       return next();

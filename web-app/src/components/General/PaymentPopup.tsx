@@ -70,8 +70,8 @@ export default function PaymentPopup({
       return;
     }
     if (currentBalance >= paymentAmount) {
-      dispatch(spendValue(paymentAmount));
       if (resourceType === "speed") {
+        dispatch(spendValue(paymentAmount));
         setNotShown();
         setIsNotificationShown(true);
         spendCoinsOnBackend(paymentAmount);
@@ -84,6 +84,7 @@ export default function PaymentPopup({
         if (currentEnergy + energyBought > 5000) {
           setTooMuchEnergyShown(true);
         } else {
+          dispatch(spendValue(paymentAmount));
           dispatch(addEnergy(energyBought));
           setNotShown();
           setIsNotificationShown(true);

@@ -23,7 +23,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <StoreProvider>
       <html className="w-full h-full max-h-dvh">
-        <body className="bg-bg-blue font-cofo text-white w-full h-full max-h-dvh relative flex justify-center">
+        <body className="bg-bg-blue font-cofo text-white w-full h-full max-h-dvh relative flex justify-center overflow-hidden">
           <div className="w-full max-w-[420px] h-full max-h-dvh relative overflow-hidden">
             <Root>{children}</Root>
           </div>

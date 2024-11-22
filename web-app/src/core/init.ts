@@ -34,22 +34,24 @@ export function init(debug: boolean): void {
     themeParams.mount();
   }
 
-  if (swipeBehavior.isSupported()) {
-    swipeBehavior.mount();
-    swipeBehavior.disableVertical();
-  }
-
   themeParams.bindCssVars();
 
   initData.restore();
 
   if (!viewport.isMounted() && !viewport.isMounting()) {
-    void viewport.mount().catch((e) => {
-      console.error("Something went wrong mounting the viewport", e);
-    });
+    void viewport
+      .mount()
+      .then(() => viewport?.expand())
+      .catch((e) => {
+        console.error("Something went wrong mounting the viewport", e);
+      });
   }
 
   if (viewport.isMounted()) {
     viewport.bindCssVars();
+  }
+
+  if (swipeBehavior) {
+    swipeBehavior?.mount();
   }
 }

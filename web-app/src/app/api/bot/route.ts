@@ -32,7 +32,7 @@ bot.command("start", async (ctx) => {
     first_name: ctx?.from?.first_name,
     last_name: ctx?.from?.last_name || "",
     telegram_username: ctx?.from?.username || "",
-    chat_id: ctx.chatId,
+    chat_id: ctx.chatId.toString(),
   };
   try {
     await fetch(

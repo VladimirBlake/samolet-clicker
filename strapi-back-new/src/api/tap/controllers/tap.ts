@@ -2,13 +2,15 @@
  * A set of functions called "actions" for `tap`
  */
 
+import { Bot } from "grammy";
+import { env } from "node:process";
+
 export default {
   async addTaps(ctx) {
     try {
       const { body } = ctx.request;
-      let { documentId, coinsBalance, currentXp, level, id } = await strapi
-        .documents("api::telegram-user.telegram-user")
-        .findFirst({
+      let { documentId, coinsBalance, currentXp, level, id, chat_id } =
+        await strapi.documents("api::telegram-user.telegram-user").findFirst({
           filters: {
             telegram_id: {
               $eq: body.telegram_id,
@@ -55,6 +57,14 @@ export default {
             populate: ["telegram_user"],
             status: "published",
           });
+
+          const bot = new Bot(strapi.config.get("server.telergamToken"));
+          if (chat_id) {
+            await bot.api.sendMessage(
+              Number(chat_id),
+              `Ваш промокод на покупку квартиры: ${promocodeLeft.promocode_id}`
+            );
+          }
         }
 
         await strapi.documents("api::apartment.apartment").create({

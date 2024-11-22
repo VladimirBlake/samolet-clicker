@@ -12,13 +12,14 @@ if (!token)
 
 const menu = new Menu("start-command-menu")
   .webApp("Играть", "https://24samolet.ru/")
+  .row()
   .text("Инструкция");
 
 const bot = new Bot(token);
 bot.use(menu);
 bot.command("start", async (ctx) => {
   await ctx.reply(
-    "Привет!👋 Рады приветствовать тебя в чат-боте компании «Самолет",
+    "Привет!👋 Рады приветствовать тебя в чат-боте компании «Самолет»",
     {
       reply_markup: menu,
     }

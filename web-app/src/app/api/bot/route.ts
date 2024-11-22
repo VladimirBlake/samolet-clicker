@@ -18,10 +18,9 @@ const bot = new Bot(token);
 bot.use(menu);
 bot.command("start", async (ctx) => {
   await ctx.reply(
-    "Привет!👋 <br/>Рады приветствовать тебя в чат-боте компании «Самолет",
+    "Привет!👋 Рады приветствовать тебя в чат-боте компании «Самолет",
     {
       reply_markup: menu,
-      parse_mode: "HTML",
     }
   );
 });

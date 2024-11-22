@@ -28,7 +28,7 @@ bot.command("start", async (ctx) => {
     username: ctx?.from?.username
       ? ctx.from.username
       : ctx?.from?.first_name + " " + (ctx?.from?.last_name || ""),
-    telegram_id: ctx.from?.id,
+    telegram_id: ctx.from?.id.toString(),
     first_name: ctx?.from?.first_name,
     last_name: ctx?.from?.last_name || "",
     telegram_username: ctx?.from?.username || "",

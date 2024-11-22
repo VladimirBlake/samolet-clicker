@@ -26,7 +26,7 @@ export default {
           const bot = new Bot(strapi.config.get("server.telergamToken"));
           await bot.api.sendMessage(
             Number(chat_id),
-            JSON.stringify(context.params.data.message)
+            context.params.data.message
           );
         }
       }

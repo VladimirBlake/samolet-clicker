@@ -15,6 +15,7 @@ const menu = new Menu("start-command-menu")
   .text("Инструкция");
 
 const bot = new Bot(token);
+bot.use(menu);
 bot.command("start", async (ctx) => {
   await ctx.reply(
     "Привет!👋 <br/>Рады приветствовать тебя в чат-боте компании «Самолет",

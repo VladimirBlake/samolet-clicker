@@ -7,6 +7,7 @@ export const createAppAsyncThunk = createAsyncThunk.withTypes<{
 }>();
 
 const initialState = {
+  status: "initial",
   "1": {
     isRented: false,
     isSold: false,
@@ -63,7 +64,22 @@ export const fetchApartmentState = createAppAsyncThunk(
   }
 );
 
+export const fetchAllApartmentsState = createAppAsyncThunk(
+  "apartments/fetchAllApartments",
+  async () => {
+    const response = await fetch(
+      `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/allApartments`,
+      {
+        method: "GET",
+      }
+    );
+    const jsonData = await response.json();
+    return jsonData;
+  }
+);
+
 export type ApartmentsState = (typeof initialState)["1"];
+export type ApartmentsInitialState = typeof initialState;
 
 export type ApartKey = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8";
 
@@ -91,6 +107,33 @@ export const apartmentsSlice = createSlice({
         isSold: action.payload.apartmentInfo.isSold,
         isUpgraded: action.payload.apartmentInfo.isUpgraded,
       };
+    });
+    builder.addCase(fetchAllApartmentsState.pending, (state, action) => {
+      state.status = "loading";
+    });
+    builder.addCase(fetchAllApartmentsState.fulfilled, (state, action) => {
+      const newState: ApartmentsInitialState = action.payload.data.reduce(
+        (a: {}, apartment: any) => {
+          return {
+            ...a,
+            [apartment.flatNum.toString()]: {
+              isRented: apartment.isRented,
+              isSold: apartment.isSold,
+              isUpgraded: apartment.isUpgraded,
+            },
+          };
+        },
+        { status: "loaded" }
+      );
+      state.status = "loaded";
+      state["1"] = newState["1"];
+      state["2"] = newState["2"];
+      state["3"] = newState["3"];
+      state["4"] = newState["4"];
+      state["5"] = newState["5"];
+      state["6"] = newState["6"];
+      state["7"] = newState["7"];
+      state["8"] = newState["8"];
     });
   },
 });

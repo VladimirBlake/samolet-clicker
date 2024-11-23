@@ -58,6 +58,21 @@ export async function POST(request: Request) {
                   }),
                 }
               );
+            } else {
+              return fetch(
+                `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/set-profile-pic`,
+                {
+                  method: "POST",
+                  headers: {
+                    Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    telegram_id: userId,
+                    photo_url: userData.photo_url,
+                  }),
+                }
+              );
             }
           })
           .then((response) => response?.json() || 0)

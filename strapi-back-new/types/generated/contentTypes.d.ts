@@ -500,6 +500,7 @@ export interface ApiTelegramUserTelegramUser
     currentXp: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     energy: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<5000>;
     first_name: Schema.Attribute.String;
+    is_subscribed_to_channel: Schema.Attribute.Boolean;
     last_name: Schema.Attribute.String;
     level: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<1>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;

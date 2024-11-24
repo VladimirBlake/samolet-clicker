@@ -59,6 +59,9 @@
     },
     "chat_id": {
       "type": "string"
+    },
+    "is_subscribed_to_channel": {
+      "type": "boolean"
     }
   }
 }

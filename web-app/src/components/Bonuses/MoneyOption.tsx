@@ -7,6 +7,7 @@ export default function MoneyOption({
   moneyValue,
   useHeight = true,
   onClick,
+  isSubscribeLink,
   isPayment = false,
   resourceType,
   resourceAmount,
@@ -16,6 +17,7 @@ export default function MoneyOption({
   moneyValue: number;
   useHeight?: boolean;
   onClick?: (title: string, resourceAmount: number) => void;
+  isSubscribeLink?: boolean;
   isPayment?: boolean;
   resourceType?: "energy" | "speed";
   resourceAmount?: number;
@@ -26,6 +28,7 @@ export default function MoneyOption({
       className={`col-span-2 cursor-pointer bg-[#3496FD] rounded-3xl flex items-center ${
         useHeight ? "p-[7px]" : "px-[5px]"
       }`}
+      isSubscribeLink={isSubscribeLink}
       href={href}
     >
       <span className="font-medium ml-2 flex items-center text-white">

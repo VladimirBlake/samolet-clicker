@@ -8,6 +8,7 @@ export default function BonusesList() {
         useHeight={false}
         title={"Подписаться на ТГ-канал"}
         moneyValue={200}
+        isSubscribeLink={true}
       />
       <MoneyOption
         useHeight={false}

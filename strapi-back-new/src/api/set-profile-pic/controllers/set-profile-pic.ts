@@ -24,7 +24,7 @@ export default {
           },
           status: "published",
         });
-      ctx.body = "ok";
+      ctx.body = { res: "ok" };
     } catch (err) {
       ctx.body = err;
     }

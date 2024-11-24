@@ -372,6 +372,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiAdvertisementAdvertisement extends Struct.SingleTypeSchema {
   collectionName: 'advertisements';
   info: {
+    description: '';
     displayName: 'Advertisement';
     pluralName: 'advertisements';
     singularName: 'advertisement';
@@ -391,7 +392,7 @@ export interface ApiAdvertisementAdvertisement extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     Name: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    thumbnail: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    thumbnail_image_url: Schema.Attribute.Text;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

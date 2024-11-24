@@ -7,6 +7,7 @@ import ImprovementPopup from "@/components/Bonuses/ImprovementPopup";
 import EnergyList from "@/components/Bonuses/EnergyList";
 import SpeedList from "@/components/Bonuses/SpeedList";
 import { Page } from "@/components/Page";
+import Advertisement from "@/components/Bonuses/Advertisement";
 
 type popUpState = "energy" | "speed" | undefined;
 
@@ -16,9 +17,7 @@ export default function BonusesPage() {
   return (
     <Page back={false}>
       <div className="grid grid-cols-2 gap-2 grid-rows-[1fr_auto_1fr_1fr_1fr] h-full max-h-[470px]">
-        <div className="col-span-2 bg-[#3496FD] rounded-3xl text-lg font-medium flex items-center justify-center">
-          реклама
-        </div>
+        <Advertisement />
         <Improvement
           onClick={() => setPopUpState("energy")}
           title="Энергия"

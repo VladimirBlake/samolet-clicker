@@ -1,0 +1,70 @@
+export default {
+  dailyRent: {
+    task: async () => {
+      const rentedAparts = await strapi
+        .documents("api::apartment.apartment")
+        .findMany({
+          filters: {
+            isRented: true,
+          },
+          populate: {
+            telegram_user: {
+              fields: ["coinsBalance"],
+            },
+          },
+          status: "published",
+        });
+      await Promise.all(
+        rentedAparts.map(async (apartment) => {
+          await strapi.documents("api::telegram-user.telegram-user").update({
+            documentId: apartment.telegram_user.documentId,
+            data: {
+              coinsBalance:
+                apartment.telegram_user.coinsBalance +
+                (apartment.isUpgraded ? 550 : 500),
+            },
+            status: "published",
+          });
+        })
+      );
+      console.log("Cron task completed");
+    },
+    options: {
+      rule: "0 0 0 * *",
+      tz: "Europe/Moscow",
+    },
+  },
+  dailyBonus: {
+    task: async () => {
+      const appUsers = await strapi
+        .documents("api::telegram-user.telegram-user")
+        .findMany({
+          status: "published",
+        });
+      await Promise.all(
+        appUsers.map(async (user) => {
+          let bonus = 0;
+          if (user.level <= 2) {
+            bonus = 500;
+          } else if (user.level <= 4) {
+            bonus = 1000;
+          } else {
+            bonus = 1500;
+          }
+
+          await strapi.documents("api::telegram-user.telegram-user").update({
+            documentId: user.documentId,
+            data: {
+              coinsBalance: user.coinsBalance + bonus,
+            },
+            status: "published",
+          });
+        })
+      );
+    },
+    options: {
+      rule: "0 0 0 * *",
+      tz: "Europe/Moscow",
+    },
+  },
+};

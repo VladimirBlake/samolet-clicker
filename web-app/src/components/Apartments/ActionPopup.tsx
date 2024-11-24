@@ -69,7 +69,9 @@ function ActionPopup({
       }),
     })
       .then((resp) => resp.json())
-      .then((resp) => console.log(resp))
+      .then((resp) => {
+        dispatch(incrementCoinsByValue(resp.data.bonus));
+      })
       .catch((err) => console.log(err));
   };
 

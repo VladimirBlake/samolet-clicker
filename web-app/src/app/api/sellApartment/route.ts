@@ -14,7 +14,7 @@ export async function POST(request: Request) {
       process.env.JWT_SECRET as string
     ) as jwt.JwtPayload;
     const userId = decoded.userId;
-    fetch(
+    const fetching = await fetch(
       `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/sell-apartment`,
       {
         method: "POST",
@@ -24,17 +24,9 @@ export async function POST(request: Request) {
         },
         body: JSON.stringify({ flatNum, telegram_id: userId }),
       }
-    )
-      .then((res) => {
-        if (!res.ok) {
-          throw Error("Error in fetch request");
-        }
-        return res.json();
-      })
-      .then((res) => {
-        response = { data: res };
-      });
-    return new Response(JSON.stringify(response), {
+    );
+    const fetchingData = await fetching.json();
+    return new Response(JSON.stringify({ ...fetchingData }), {
       status: 200,
     });
   } catch (err) {

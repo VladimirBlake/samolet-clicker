@@ -28,10 +28,7 @@ export default function Advertisement() {
     <Link
       href={advertisementData.url ? advertisementData.url : ""}
       style={{
-        background:
-          advertisementData.url === ""
-            ? "#3496FD"
-            : `url("${advertisementData.photo}")`,
+        background: "#3496FD",
       }}
       className="col-span-2 bg-[#3496FD] rounded-3xl bg-cover text-lg font-medium flex items-center justify-center"
     >

@@ -22,7 +22,7 @@ export default {
               data: {
                 coinsBalance:
                   apartment.telegram_user.coinsBalance +
-                  (apartment.isUpgraded ? 550 : 500),
+                  (apartment.isUpgraded ? 500 : 600),
               },
               status: "published",
             });

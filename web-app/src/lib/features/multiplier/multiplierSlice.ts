@@ -21,9 +21,10 @@ export const setMultiplierWithTimeout = (
   dispatch: AppDispatch,
   value: number
 ) => {
+  const time = value === 2 ? 1000 * 60 * 5 : 1000 * 60 * 10;
   dispatch(setMultiplier(value));
   setTimeout(() => {
     dispatch(setMultiplier(1));
-  }, 10000);
+  }, time);
 };
 export default multiplierSlice.reducer;

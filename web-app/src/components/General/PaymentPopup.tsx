@@ -151,7 +151,7 @@ export default function PaymentPopup({
       ? "у вас больше времени для строительства"
       : `в течение ${
           paymentPositionTitle?.slice(-1) === "2" ? "5" : "10"
-        } минут ваш тап принесет вам в ${multiplierInWords} раза больше монет`;
+        } минут ваш клик принесет вам в ${multiplierInWords} раза больше монет`;
 
   return (
     <AnimatePresence>

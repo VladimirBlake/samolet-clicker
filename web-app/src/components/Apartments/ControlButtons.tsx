@@ -69,7 +69,7 @@ export default function ControlButtons({
       ...popUpStates.rent,
       actionType: "rent",
       isApartmentUpgraded: apartmentInfo.isUpgraded,
-      price: apartmentInfo.isUpgraded ? 550 : 500,
+      price: apartmentInfo.isUpgraded ? 600 : 500,
     });
     setIsPopUpShown(true);
   }
@@ -79,7 +79,7 @@ export default function ControlButtons({
       ...popUpStates.sell,
       actionType: "sell",
       isApartmentUpgraded: apartmentInfo.isUpgraded,
-      price: apartmentInfo.isUpgraded ? 12500 : 10000,
+      price: apartmentInfo.isUpgraded ? 15000 : 10000,
     });
     setIsPopUpShown(true);
   }

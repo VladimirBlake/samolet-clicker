@@ -5,7 +5,7 @@ type BuildingState = {
   level: number;
 };
 
-export const xpForEachLevel = 30;
+export const xpForEachLevel = 5000;
 
 export const buildingSlice = createSlice({
   name: "building",

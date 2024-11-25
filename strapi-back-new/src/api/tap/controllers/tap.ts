@@ -3,7 +3,6 @@
  */
 
 import { Bot } from "grammy";
-import { env } from "node:process";
 
 export default {
   async addTaps(ctx) {
@@ -20,13 +19,13 @@ export default {
 
       const oldLevel = level;
 
-      if (body.xp + currentXp >= 30) {
-        const levelUpgrades = Math.floor((body.xp + currentXp) / 30);
+      if (body.xp + currentXp >= 5000) {
+        const levelUpgrades = Math.floor((body.xp + currentXp) / 5000);
         level = Math.min(7, level + levelUpgrades);
         if (level === 7 && oldLevel + levelUpgrades > 7) {
-          currentXp = 29;
+          currentXp = 4999;
         } else {
-          currentXp = (body.xp + currentXp) % 30;
+          currentXp = (body.xp + currentXp) % 5000;
         }
       } else {
         currentXp += body.xp;

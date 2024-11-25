@@ -18,15 +18,8 @@
     "url": {
       "type": "string"
     },
-    "thumbnail": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
-      "type": "media",
-      "multiple": false
+    "thumbnail_image_url": {
+      "type": "text"
     }
   }
 }

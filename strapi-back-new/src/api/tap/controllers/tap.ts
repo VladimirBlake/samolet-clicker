@@ -18,6 +18,7 @@ export default {
         });
 
       const oldLevel = level;
+      const oldXp = currentXp;
 
       if (body.xp + currentXp >= 5000) {
         const levelUpgrades = Math.floor((body.xp + currentXp) / 5000);
@@ -31,7 +32,11 @@ export default {
         currentXp += body.xp;
       }
 
-      if (oldLevel < level && level === 7) {
+      if (
+        ((oldXp < 4999 && oldLevel === 7) || oldLevel < 7) &&
+        level === 7 &&
+        currentXp === 4999
+      ) {
         const promocodeLeft = await strapi
           .documents("api::promocode.promocode")
           .findFirst({

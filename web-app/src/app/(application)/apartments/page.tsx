@@ -14,8 +14,9 @@ const apartmentsNums = Array.from(Array(8).keys(), (_, i) =>
 );
 
 export default function ApartmentsPage() {
-  const areApartmentsAvailable =
-    useAppSelector((state) => state.building.level) === 7;
+  const currentLevel = useAppSelector((state) => state.building.level);
+  const currentXp = useAppSelector((state) => state.building.currentXp);
+  const areApartmentsAvailable = currentLevel === 7 && currentXp === 4999;
 
   const apartments = useAppSelector((state) => state.apartments);
   const dispatch = useAppDispatch();

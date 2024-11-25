@@ -15,15 +15,22 @@ export default function MainPage() {
   const [isSevenLevelNotifShown, setIsSevenLevelNotifShown] = useState(false);
 
   const buildingLevel = useAppSelector((state) => state.building.level);
+  const currentXp = useAppSelector((state) => state.building.currentXp);
 
   const currentLevelRef = useRef(buildingLevel);
+  const currentXpRef = useRef(currentXp);
 
   useEffect(() => {
-    if (currentLevelRef.current === 6 && buildingLevel === 7) {
+    if (
+      currentXpRef.current === 4998 &&
+      buildingLevel === 7 &&
+      currentLevelRef.current !== currentXp
+    ) {
       setIsSevenLevelNotifShown(true);
     }
     currentLevelRef.current = buildingLevel;
-  }, [buildingLevel]);
+    currentXpRef.current = currentXp;
+  }, [buildingLevel, currentXp]);
 
   const hideImprovementPopup = () => {
     setIsImprovementPopupShown(false);

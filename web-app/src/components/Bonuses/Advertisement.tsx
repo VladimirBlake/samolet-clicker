@@ -35,11 +35,7 @@ export default function Advertisement() {
       }}
       className="col-span-2 bg-[#3496FD] rounded-3xl bg-cover text-lg font-medium flex items-center justify-center"
     >
-      {advertisementData.url ? (
-        <></>
-      ) : (
-        <span className="text-white">реклама</span>
-      )}
+      <span className="text-white">реклама</span>
     </Link>
   );
 }

@@ -11,7 +11,10 @@ export default {
    */
   register() {
     strapi.documents.use(async (context, next) => {
-      if (context.uid !== "api::user-message.user-message") {
+      if (
+        context.uid !== "api::user-message.user-message" &&
+        context.action !== "create"
+      ) {
         return next();
       }
       try {

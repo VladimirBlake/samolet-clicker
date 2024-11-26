@@ -31,7 +31,7 @@ export default function Advertisement() {
         background:
           advertisementData.url === ""
             ? "#3496FD"
-            : `url(${advertisementData.photo})`,
+            : `no-repeat url(${advertisementData.photo})`,
         backgroundSize: "cover",
       }}
       className="col-span-2 bg-[#3496FD] rounded-3xl bg-cover text-lg font-medium flex items-center justify-center"

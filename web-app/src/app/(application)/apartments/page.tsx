@@ -38,7 +38,7 @@ export default function ApartmentsPage() {
   return (
     <Page back={false}>
       {areApartmentsAvailable ? (
-        <div className="grid grid-cols-1 gap-y-2 w-full h-full auto-rows-1fr max-h-[520px]">
+        <div className="grid grid-cols-1 gap-y-2 w-full h-[calc(100vh-232px)] auto-rows-1fr max-h-[520px]">
           {apartmentsNums.map((apartmentNum) => (
             <ApartmentListElement
               apartNum={apartmentNum}

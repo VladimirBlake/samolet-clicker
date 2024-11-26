@@ -42,6 +42,7 @@ export async function POST(request: Request) {
         );
 
         const fetchUserData = await fetchUser.json();
+        let energyJson = { energy: 5000 };
         if (fetchUserData.data.length === 0) {
           await fetch(
             `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/telegram-users`,
@@ -59,6 +60,20 @@ export async function POST(request: Request) {
             }
           );
         } else {
+          const currentEnergyReq = await fetch(
+            `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/init-energy`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                telegram_id: userId,
+              }),
+            }
+          );
+          energyJson = await currentEnergyReq.json();
           await fetch(
             `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/set-profile-pic`,
             {
@@ -74,21 +89,6 @@ export async function POST(request: Request) {
             }
           );
         }
-
-        const currentEnergyReq = await fetch(
-          `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/init-energy`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              telegram_id: userId,
-            }),
-          }
-        );
-        const energyJson = await currentEnergyReq.json();
 
         return new Response(
           JSON.stringify({ userJwt, energy: energyJson.energy }),

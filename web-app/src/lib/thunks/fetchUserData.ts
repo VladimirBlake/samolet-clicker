@@ -1,6 +1,6 @@
 import { setCurrentBuildingData } from "../features/building/buildingSlice";
 import { setCoinsValue } from "../features/coins/coinsSlice";
-import { setEnergy } from "../features/energy/energySlice";
+import { setEnergy, setLoadedStatus } from "../features/energy/energySlice";
 import { userStateLoad } from "../features/user/userSlice";
 import { AppThunk } from "../store";
 
@@ -16,6 +16,7 @@ export const fetchUserData = (): AppThunk => {
       const responseJson = await response.json();
       dispatch(userStateLoad(responseJson.userData));
       dispatch(setEnergy(responseJson.userData.energy));
+      dispatch(setLoadedStatus(0));
       dispatch(setCoinsValue(responseJson.userData.coinsBalance));
       dispatch(
         setCurrentBuildingData({

@@ -29,8 +29,6 @@ export default function Home() {
     ])
       .then((res) => res[0].json())
       .then((res) => {
-        console.log(res.energy);
-        dispatch(setEnergy(res.energy));
         router.push("/main-page");
       })
       .catch((err) => console.log(err));

@@ -147,6 +147,7 @@ export default {
             energy: body.energy,
             currentXp,
             level,
+            updatedLastTime: new Date(Date.now()).toISOString(),
           },
         });
       ctx.body = update.documentId;

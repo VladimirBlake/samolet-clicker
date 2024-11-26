@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const energySlice = createSlice({
   name: "energy",
   initialState: {
+    status: "not loaded",
     value: 5000,
   },
   reducers: {
@@ -19,9 +20,17 @@ const energySlice = createSlice({
     addEnergy: (state, action) => {
       state.value = Math.min(5000, action.payload + state.value);
     },
+    setLoadedStatus: (state, action) => {
+      state.status = "loaded";
+    },
   },
 });
 
-export const { collectEnergy, spendEnergy, setEnergy, addEnergy } =
-  energySlice.actions;
+export const {
+  collectEnergy,
+  spendEnergy,
+  setEnergy,
+  addEnergy,
+  setLoadedStatus,
+} = energySlice.actions;
 export default energySlice.reducer;

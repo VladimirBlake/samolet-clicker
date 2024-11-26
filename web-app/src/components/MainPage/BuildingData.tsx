@@ -33,9 +33,10 @@ export default function BuildingData() {
   const energyAvailable = useAppSelector((state) => state.energy.value);
   const buildingLevel = useAppSelector((state) => state.building.level);
   const dispatch = useAppDispatch();
+  const energyStatus = useAppSelector((state) => state.energy.status);
 
   const handleBuildingPointerup: PointerEventHandler<HTMLDivElement> = (e) => {
-    if (energyAvailable > 0) {
+    if (energyAvailable > 0 && energyStatus === "loaded") {
       const rect = e.currentTarget.getBoundingClientRect();
       const coinId = Math.random();
       const newCoinCoordinates: CoinInitData = {
@@ -91,14 +92,18 @@ export default function BuildingData() {
 
     return () => {
       clearInterval(interval);
-      sendCoinsToBackEnd(coinsCollectedRef.current, energyAvailable);
+      if (energyStatus === "loaded") {
+        sendCoinsToBackEnd(coinsCollectedRef.current, energyAvailable);
+      }
     };
   }, []);
 
   useEffect(() => {
-    if (coinsCollected > 0 && timer > 2000) {
-      sendCoinsToBackEnd(coinsCollected, energyAvailable);
-      setCoinsCollected(0);
+    if (energyStatus === "loaded") {
+      if (coinsCollected > 0 && timer > 2000) {
+        sendCoinsToBackEnd(coinsCollected, energyAvailable);
+        setCoinsCollected(0);
+      }
     }
   }, [timer]);
 

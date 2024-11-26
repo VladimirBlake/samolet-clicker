@@ -74,22 +74,28 @@ export function Root(props: PropsWithChildren) {
       dispatch(collectEnergy());
     }, 1200);
 
-    const energyFetchInterval = setInterval(async () => {
-      await fetch(
-        `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/setEnergy/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            energy: currentEnergy,
-          }),
-        }
-      );
-    }, 2000);
+    let intervalNew: string | number | NodeJS.Timeout | undefined;
+
+    // const timeout = setTimeout(async () => {
+    //   intervalNew = setInterval(async () => {
+    //     await fetch(
+    //       `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/setEnergy/`,
+    //       {
+    //         method: "POST",
+    //         headers: { "Content-Type": "application/json" },
+    //         body: JSON.stringify({
+    //           energy: currentEnergy,
+    //         }),
+    //       }
+    //     );
+    //   }, 2000);
+    // }, 5000);
 
     return () => {
       clearInterval(interval);
-      clearInterval(energyFetchInterval);
+      // if (intervalNew) {
+      //   clearInterval(intervalNew);
+      // }
     };
   }, []);
 

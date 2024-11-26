@@ -22,10 +22,12 @@ export default {
         documentId: user.documentId,
         data: {
           energy: Math.min(5000, newEnergy),
+          updatedLastTime: new Date(Date.now()).toISOString(),
         },
         status: "published",
       });
-      ctx.body = { energy: newEnergy };
+      console.log(Math.min(5000, newEnergy));
+      ctx.body = { energy: Math.min(5000, newEnergy) };
     } catch (err) {
       ctx.body = err;
     }

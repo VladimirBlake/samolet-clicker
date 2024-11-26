@@ -3,7 +3,7 @@ import NotificationPopup from "../General/NotificationPopup";
 
 export default function NotAvailable() {
   return (
-    <div className="w-full h-full absolute bg-white/5 backdrop-blur-md left-0 top-0 z-0">
+    <div className="w-full h-full absolute bg-white/5 backdrop-blur-md left-0 top-0 z-30">
       <NotificationPopup
         title="Вам недоступен раздел с квартирами"
         description="вы сможете продавать и сдавать квартиры, когда достигнете последнего уровня"

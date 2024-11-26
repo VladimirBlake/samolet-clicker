@@ -33,55 +33,70 @@ export async function POST(request: Request) {
           expiresIn: "10h",
         });
         cookiesStore.set("jwtToken", userJwt, { maxAge: 36000 });
-        fetch(
+        const fetchUser = await fetch(
           `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/telegram-users?filters[telegram_id][$eq]=${userId}`,
           {
             method: "GET",
             headers: { Authorization: `bearer ${process.env.STRAPI_TOKEN}` },
           }
-        )
-          .then((data) => data.json())
-          .then((data) => {
-            if (data.data.length === 0) {
-              return fetch(
-                `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/telegram-users`,
-                {
-                  method: "POST",
-                  headers: {
-                    Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    data: {
-                      ...userData,
-                    },
-                  }),
-                }
-              );
-            } else {
-              return fetch(
-                `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/set-profile-pic`,
-                {
-                  method: "POST",
-                  headers: {
-                    Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    telegram_id: userId,
-                    photo_url: userData.photo_url,
-                  }),
-                }
-              );
+        );
+
+        const fetchUserData = await fetchUser.json();
+        if (fetchUserData.data.length === 0) {
+          await fetch(
+            `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/telegram-users`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                data: {
+                  ...userData,
+                },
+              }),
             }
-          })
-          .then((response) => response?.json() || 0)
-          .then((response) => console.log(response))
-          .catch((err) => console.log(err));
-        return new Response(JSON.stringify({ userJwt }), {
-          status: 200,
-          headers: { "Set-Cookie": `jwtToken=${userJwt}` },
-        });
+          );
+        } else {
+          await fetch(
+            `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/set-profile-pic`,
+            {
+              method: "POST",
+              headers: {
+                Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                telegram_id: userId,
+                photo_url: userData.photo_url,
+              }),
+            }
+          );
+        }
+
+        const currentEnergyReq = await fetch(
+          `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/init-energy`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              telegram_id: userId,
+            }),
+          }
+        );
+        const energyJson = await currentEnergyReq.json();
+
+        return new Response(
+          JSON.stringify({ userJwt, energy: energyJson.energy }),
+          {
+            status: 200,
+            headers: { "Set-Cookie": `jwtToken=${userJwt}` },
+          }
+        );
       } catch {
         return new Response("Error in auth token validation", {
           status: 401,

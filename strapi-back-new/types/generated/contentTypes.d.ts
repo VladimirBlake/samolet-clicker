@@ -521,6 +521,7 @@ export interface ApiTelegramUserTelegramUser
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    updatedLastTime: Schema.Attribute.DateTime;
     username: Schema.Attribute.String;
   };
 }

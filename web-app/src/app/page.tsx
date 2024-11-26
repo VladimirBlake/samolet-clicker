@@ -8,9 +8,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
+import { useAppDispatch } from "@/lib/hooks";
+import { setEnergy } from "@/lib/features/energy/energySlice";
 
 export default function Home() {
   const router = useRouter();
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const { initDataRaw } = retrieveLaunchParams();
@@ -25,6 +29,8 @@ export default function Home() {
     ])
       .then((res) => res[0].json())
       .then((res) => {
+        console.log(res.energy);
+        dispatch(setEnergy(res.energy));
         router.push("/main-page");
       })
       .catch((err) => console.log(err));

@@ -1,5 +1,5 @@
 /**
- * A set of functions called "actions" for `init-energy`
+ * A set of functions called "actions" for `init-energy`1
  */
 
 export default {
@@ -21,7 +21,7 @@ export default {
       await strapi.documents("api::telegram-user.telegram-user").update({
         documentId: user.documentId,
         data: {
-          energy: newEnergy,
+          energy: Math.min(5000, newEnergy),
         },
         status: "published",
       });

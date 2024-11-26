@@ -19,7 +19,7 @@ import { init } from "@/core/init";
 
 import "./styles.css";
 import { setCoinsValue } from "@/lib/features/coins/coinsSlice";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { collectEnergy, setEnergy } from "@/lib/features/energy/energySlice";
 import { setMultiplier } from "@/lib/features/multiplier/multiplierSlice";
 
@@ -64,6 +64,7 @@ export function Root(props: PropsWithChildren) {
   // side.
   const didMount = useDidMount();
   const dispatch = useAppDispatch();
+  const currentEnergy = useAppSelector((state) => state.energy.value);
 
   useEffect(() => {
     // Multiplier
@@ -73,7 +74,23 @@ export function Root(props: PropsWithChildren) {
       dispatch(collectEnergy());
     }, 1200);
 
-    return () => clearInterval(interval);
+    const energyFetchInterval = setInterval(async () => {
+      await fetch(
+        `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/setEnergy/`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            energy: currentEnergy,
+          }),
+        }
+      );
+    }, 2000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(energyFetchInterval);
+    };
   }, []);
 
   return didMount ? (

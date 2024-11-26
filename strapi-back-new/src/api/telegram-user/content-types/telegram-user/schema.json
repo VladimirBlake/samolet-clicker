@@ -62,6 +62,9 @@
     },
     "is_subscribed_to_channel": {
       "type": "boolean"
+    },
+    "updatedLastTime": {
+      "type": "datetime"
     }
   }
 }

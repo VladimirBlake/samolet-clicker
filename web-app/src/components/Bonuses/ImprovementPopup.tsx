@@ -41,7 +41,7 @@ export default function ImprovementPopup({
           initial={{ opacity: 0 }}
           exit={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { duration: 0.3 } }}
-          className="bg-bg-blue w-full h-full absolute left-0 bottom-0 z-20 px-5"
+          className="bg-bg-blue w-full h-full absolute left-0 bottom-0 z-30 px-5"
         >
           <div className="flex justify-end pt-8 pb-6 pr-4">
             <button onClick={setNotShown}>

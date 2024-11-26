@@ -27,7 +27,7 @@ export default function BottomPopup({
         exit={{ transform: "translateY(100%)", transition: { duration: 0.25 } }}
         initial={{ transform: "translateY(100%)" }}
         animate={{ transform: "translateX(0)", transition: { duration: 0.3 } }}
-        className="w-full absolute bottom-0 bg-bg-blue rounded-t-[40px] px-5 popUpBottom"
+        className="w-full absolute bottom-0 bg-bg-blue rounded-t-[40px] px-5 popUpBottom z-30"
       >
         <div className="flex justify-end pt-8 pr-6 pb-7">
           <button onClick={setNotShown}>

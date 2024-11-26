@@ -23,6 +23,7 @@ export default {
           data: {
             energy: Math.min(5000, energy + body.energy),
             coinsBalance: coinsBalance - body.coins,
+            updatedLastTime: new Date(Date.now()).toISOString(),
           },
         });
       ctx.body = documentId;

@@ -34,7 +34,7 @@ export default function Advertisement() {
             : `no-repeat url(${advertisementData.photo})`,
         backgroundSize: "cover",
       }}
-      className="col-span-2 bg-[#3496FD] rounded-3xl bg-cover text-lg font-medium flex items-center justify-center"
+      className="col-span-2 bg-[#3496FD] rounded-3xl bg-cover w-full text-lg font-medium flex items-center justify-center"
     >
       {/* <span className="text-white">реклама</span> */}
     </Link>

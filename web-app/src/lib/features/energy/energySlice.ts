@@ -11,8 +11,8 @@ const energySlice = createSlice({
       const newEnergy = state.value + 1;
       state.value = Math.min(5000, newEnergy);
     },
-    spendEnergy: (state) => {
-      state.value -= 1;
+    spendEnergy: (state, action) => {
+      state.value -= action.payload;
     },
     setEnergy: (state, action) => {
       state.value = action.payload;

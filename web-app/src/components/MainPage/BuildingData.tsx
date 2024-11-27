@@ -48,7 +48,7 @@ export default function BuildingData() {
 
       dispatch(incrementCoinsByValue(multiplier));
       dispatch(increaseXpByAmount(multiplier));
-      dispatch(spendEnergy());
+      dispatch(spendEnergy(multiplier));
       setTimer(0);
       setCoinsCollected((prev) => prev + multiplier);
 

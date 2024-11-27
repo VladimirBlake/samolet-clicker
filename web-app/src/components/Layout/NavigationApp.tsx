@@ -16,7 +16,7 @@ export default function NavigationApp() {
   return (
     <div
       className={`border-[1px] border-[#4DA3FD] p-1 rounded-full bg-layoutGradient flex z-20 ${
-        currentPath === "/apartments"
+        currentPath === "/bonuses"
           ? "absolute w-[calc(100%-40px)] left-1/2 -translate-x-1/2 bottom-7"
           : ""
       }`}

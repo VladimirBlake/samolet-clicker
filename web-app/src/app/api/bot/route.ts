@@ -10,10 +10,10 @@ const token = process.env.TELERGAM_API_TOKEN;
 if (!token)
   throw new Error("TELEGRAM_API_TOKEN environment variable not found.");
 
-const menu = new Menu("start-command-menu")
-  .webApp("Играть", "https://24samolet.ru/")
-  .row()
-  .text("Инструкция");
+const menu = new Menu("start-command-menu").webApp(
+  "Играть",
+  "https://24samolet.ru/"
+);
 
 const bot = new Bot(token);
 bot.use(menu);

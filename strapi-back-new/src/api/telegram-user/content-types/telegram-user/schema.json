@@ -65,6 +65,14 @@
     },
     "updatedLastTime": {
       "type": "datetime"
+    },
+    "is_subscribed_to_vk": {
+      "type": "boolean",
+      "default": false
+    },
+    "have_read_about_samolet": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

@@ -15,6 +15,7 @@ export interface LinkProps
 
 interface MyLinkProps extends LinkProps {
   isSubscribeLink?: boolean;
+  subscriptionType?: "tg" | "vk-group" | "vk-read";
 }
 
 export const Link: FC<MyLinkProps> = ({
@@ -22,6 +23,7 @@ export const Link: FC<MyLinkProps> = ({
   onClick: propsOnClick,
   href,
   isSubscribeLink,
+  subscriptionType,
   ...rest
 }) => {
   const dispatch = useAppDispatch();
@@ -49,12 +51,23 @@ export const Link: FC<MyLinkProps> = ({
         e.preventDefault();
         openLink(targetUrl.toString());
         if (isSubscribeLink) {
-          fetch(
-            `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/subscribeTgBonus`,
-            {
-              method: "POST",
-            }
-          )
+          let apiLink = "";
+          switch (subscriptionType) {
+            case "tg":
+              apiLink = `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/subscribeTgBonus`;
+              break;
+            case "vk-group":
+              apiLink = `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/subscribeVkBonus`;
+              break;
+            case "vk-read":
+              apiLink = `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/readVkBonus`;
+              break;
+            default:
+              throw new Error("Link type must be defined");
+          }
+          fetch(apiLink, {
+            method: "POST",
+          })
             .then((res) => res.json())
             .then((res) => dispatch(incrementCoinsByValue(res.bonus)))
             .catch((err) => console.log(err));

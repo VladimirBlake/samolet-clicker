@@ -11,6 +11,7 @@ export default function MoneyOption({
   isPayment = false,
   resourceType,
   resourceAmount,
+  subscriptionType,
   href,
 }: {
   title: string;
@@ -21,6 +22,7 @@ export default function MoneyOption({
   isPayment?: boolean;
   resourceType?: "energy" | "speed";
   resourceAmount?: number;
+  subscriptionType?: "tg" | "vk-group" | "vk-read";
   href?: string;
 }) {
   return href ? (
@@ -28,10 +30,11 @@ export default function MoneyOption({
       className={`col-span-2 cursor-pointer bg-[#3496FD] rounded-3xl flex items-center ${
         useHeight ? "p-[7px]" : "px-[5px]"
       }`}
+      subscriptionType={subscriptionType}
       isSubscribeLink={isSubscribeLink}
       href={href}
     >
-      <span className="font-medium ml-2 flex items-center text-white">
+      <span className="font-medium ml-2 flex items-center text-white text-[15px]">
         {title}
         {resourceType === "energy" ? (
           <img className="w-2.5 h-auto ml-1" src={energy.src} alt="" />

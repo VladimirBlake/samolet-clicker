@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 export default function Layout({ children }: PropsWithChildren) {
   const path = usePathname();
   return (
-    <div className="w-full h-screen max-h-dvh px-5 py-7 grid grid-rows-[auto_1fr_auto] grid-cols-1 gap-y-4">
+    <div className="w-full h-screen max-h-dvh px-5 py-7 grid grid-rows-[auto_1fr_auto] grid-cols-1 gap-y-4 text-white">
       <HeaderApp />
       <div>{children}</div>
       {path === "/bonuses" && (

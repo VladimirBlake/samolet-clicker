@@ -108,7 +108,7 @@ function ActionPopup({
         break;
       case "sell":
         dispatch(sellApartment(apartNum));
-        dispatch(incrementCoinsByValue(isApartmentUpgraded ? 12500 : 10000));
+        dispatch(incrementCoinsByValue(isApartmentUpgraded ? 15000 : 10000));
         sellApartmentOnBackend(apartNum);
         setSuccessNotificationShown(true);
         setTimeout(() => setSuccessNotificationShown(false), 2000);

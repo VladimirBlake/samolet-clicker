@@ -58,7 +58,7 @@ export default {
           data: {
             coinsBalance:
               telegram_user.coinsBalance +
-              (isUpgraded ? 12500 : 10000) +
+              (isUpgraded ? 15000 : 10000) +
               optionalBonus,
           },
           status: "published",

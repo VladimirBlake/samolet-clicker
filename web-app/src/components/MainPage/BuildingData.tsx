@@ -100,7 +100,7 @@ export default function BuildingData() {
 
   useEffect(() => {
     if (energyStatus === "loaded") {
-      if (coinsCollected > 0 && timer > 2000) {
+      if (coinsCollected > 0 && timer > 200) {
         sendCoinsToBackEnd(coinsCollected, energyAvailable);
         setCoinsCollected(0);
       }

@@ -5,12 +5,14 @@ type UserSliceInitialState = {
   status: "idle" | "pending" | "succeeded" | "rejected";
   username: string;
   photoUrl: string;
+  isNew: boolean;
 };
 
 const initialState: UserSliceInitialState = {
   status: "idle",
   username: "",
   photoUrl: "",
+  isNew: false,
 };
 
 const userSlice = createSlice({
@@ -21,9 +23,12 @@ const userSlice = createSlice({
       state.username = action.payload.username;
       state.photoUrl = action.payload.photo_url;
     },
+    setIsNew: (state, action: { payload: boolean }) => {
+      state.isNew = action.payload;
+    },
   },
 });
 
-export const { userStateLoad } = userSlice.actions;
+export const { userStateLoad, setIsNew } = userSlice.actions;
 
 export default userSlice.reducer;

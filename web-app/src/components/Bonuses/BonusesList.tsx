@@ -27,16 +27,6 @@ export default function BonusesList() {
         isSubscribeLink={true}
         subscriptionType="vk-read"
       />
-      <MoneyOption
-        useHeight={false}
-        title={"Проданы 8 квартир"}
-        moneyValue={900}
-      />
-      <MoneyOption
-        useHeight={false}
-        title={"Проданы 5 квартир"}
-        moneyValue={500}
-      />
     </>
   );
 }

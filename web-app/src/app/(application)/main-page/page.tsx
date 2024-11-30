@@ -5,10 +5,12 @@ import SpeedupButton from "@/components/MainPage/SpeedupButton";
 import ImprovementPopup from "@/components/Bonuses/ImprovementPopup";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "motion/react";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { motion } from "motion/react";
 import NotificationPopup from "@/components/General/NotificationPopup";
 import coins from "../../_assets/layout/coin.png";
+import Instruction from "@/components/MainPage/Instruction";
+import { setIsNew } from "@/lib/features/user/userSlice";
 
 export default function MainPage() {
   const [isImprovementPopupShown, setIsImprovementPopupShown] = useState(false);
@@ -16,6 +18,8 @@ export default function MainPage() {
 
   const buildingLevel = useAppSelector((state) => state.building.level);
   const currentXp = useAppSelector((state) => state.building.currentXp);
+  const isNewUser = useAppSelector((state) => state.user.isNew);
+  const dispatch = useAppDispatch();
 
   const currentLevelRef = useRef(buildingLevel);
   const currentXpRef = useRef(currentXp);
@@ -72,6 +76,9 @@ export default function MainPage() {
               description="Вы прошли основную часть игры, в чате с ботом, вы можете найти промокод на покупку квартиры"
             />
           </motion.div>
+        )}
+        {isNewUser && (
+          <Instruction setCompleted={() => dispatch(setIsNew(false))} />
         )}
       </AnimatePresence>
     </Page>

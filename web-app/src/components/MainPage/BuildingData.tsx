@@ -36,7 +36,7 @@ export default function BuildingData() {
   const energyStatus = useAppSelector((state) => state.energy.status);
 
   const handleBuildingPointerup: PointerEventHandler<HTMLDivElement> = (e) => {
-    if (energyAvailable > 0 && energyStatus === "loaded") {
+    if (energyAvailable >= multiplier && energyStatus === "loaded") {
       const rect = e.currentTarget.getBoundingClientRect();
       const coinId = Math.random();
       const newCoinCoordinates: CoinInitData = {

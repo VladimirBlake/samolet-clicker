@@ -37,11 +37,6 @@ export default {
         (apartment) => !apartment.isSold
       );
       let optionalBonus = 0;
-      if (notSoldApartments.length === 4) {
-        optionalBonus = 500;
-      } else if (notSoldApartments.length === 1) {
-        optionalBonus = 900;
-      }
 
       let response = await strapi.documents("api::apartment.apartment").update({
         documentId,
@@ -57,9 +52,7 @@ export default {
           documentId: telegram_user.documentId,
           data: {
             coinsBalance:
-              telegram_user.coinsBalance +
-              (isUpgraded ? 15000 : 10000) +
-              optionalBonus,
+              telegram_user.coinsBalance + (isUpgraded ? 15000 : 10000),
           },
           status: "published",
         });

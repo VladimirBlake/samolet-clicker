@@ -66,6 +66,7 @@ export default {
             });
           })
         );
+        console.log("Bonuses added successfully");
       } catch (err) {
         console.log(err);
       }

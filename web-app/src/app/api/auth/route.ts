@@ -43,6 +43,7 @@ export async function POST(request: Request) {
 
         const fetchUserData = await fetchUser.json();
         let energyJson = { energy: 5000 };
+        let isNew = false;
         if (fetchUserData.data.length === 0) {
           await fetch(
             `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/telegram-users`,
@@ -59,6 +60,7 @@ export async function POST(request: Request) {
               }),
             }
           );
+          isNew = true;
         } else {
           const currentEnergyReq = await fetch(
             `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/init-energy`,
@@ -91,7 +93,11 @@ export async function POST(request: Request) {
         }
 
         return new Response(
-          JSON.stringify({ userJwt, energy: energyJson.energy }),
+          JSON.stringify({
+            userJwt,
+            energy: energyJson.energy,
+            isUserNew: isNew,
+          }),
           {
             status: 200,
             headers: { "Set-Cookie": `jwtToken=${userJwt}` },

@@ -10,6 +10,7 @@ import { motion } from "motion/react";
 import { retrieveLaunchParams } from "@telegram-apps/sdk-react";
 import { useAppDispatch } from "@/lib/hooks";
 import { setEnergy } from "@/lib/features/energy/energySlice";
+import { setIsNew } from "@/lib/features/user/userSlice";
 
 export default function Home() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function Home() {
     ])
       .then((res) => res[0].json())
       .then((res) => {
+        dispatch(setIsNew(res.isUserNew));
         router.push("/main-page");
       })
       .catch((err) => console.log(err));

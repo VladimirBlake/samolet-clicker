@@ -16,7 +16,7 @@ export default function BonusesPage() {
 
   return (
     <Page back={false}>
-      <div className="grid grid-cols-2 gap-2 grid-rows-[50px_auto_50px_50px_50px_50px_50px] h-[calc(100vh-232px)] overflow-scroll">
+      <div className="grid grid-cols-2 gap-2 grid-rows-[50px_minmax(193px,244px)_minmax(50px,65px)_minmax(50px,65px)_minmax(50px,65px)] h-[calc(100vh-232px)] overflow-scroll pb-2">
         <Advertisement />
         <Improvement
           onClick={() => setPopUpState("energy")}

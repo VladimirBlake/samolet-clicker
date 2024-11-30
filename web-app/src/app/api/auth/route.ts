@@ -62,6 +62,22 @@ export async function POST(request: Request) {
           );
           isNew = true;
         } else {
+          if (!fetchUserData.data[0].opened_miniapp) {
+            isNew = true;
+            await fetch(
+              `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/set-minimap-openned`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `bearer ${process.env.STRAPI_TOKEN}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  telegram_id: userId,
+                }),
+              }
+            );
+          }
           const currentEnergyReq = await fetch(
             `${process.env.STRAPI_PROTOCOL}://${process.env.STRAPI_HOST}/api/init-energy`,
             {

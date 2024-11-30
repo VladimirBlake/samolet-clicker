@@ -514,6 +514,8 @@ export interface ApiTelegramUserTelegramUser
       'api::telegram-user.telegram-user'
     > &
       Schema.Attribute.Private;
+    opened_miniapp: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
     photo_url: Schema.Attribute.String;
     promocode: Schema.Attribute.Relation<
       'oneToOne',

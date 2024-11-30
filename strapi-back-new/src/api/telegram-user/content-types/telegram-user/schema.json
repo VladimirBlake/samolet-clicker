@@ -73,6 +73,10 @@
     "have_read_about_samolet": {
       "type": "boolean",
       "default": false
+    },
+    "opened_miniapp": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

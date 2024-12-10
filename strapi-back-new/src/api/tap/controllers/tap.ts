@@ -32,6 +32,20 @@ export default {
         currentXp += body.xp;
       }
 
+      const update = await strapi
+        .documents("api::telegram-user.telegram-user")
+        .update({
+          documentId,
+          status: "published",
+          data: {
+            coinsBalance: coinsBalance + body.coins,
+            energy: body.energy,
+            currentXp,
+            level,
+            updatedLastTime: new Date(Date.now()).toISOString(),
+          },
+        });
+
       if (
         ((oldXp < 4999 && oldLevel === 7) || oldLevel < 7) &&
         level === 7 &&
@@ -139,20 +153,6 @@ export default {
           status: "published",
         });
       }
-
-      const update = await strapi
-        .documents("api::telegram-user.telegram-user")
-        .update({
-          documentId,
-          status: "published",
-          data: {
-            coinsBalance: coinsBalance + body.coins,
-            energy: body.energy,
-            currentXp,
-            level,
-            updatedLastTime: new Date(Date.now()).toISOString(),
-          },
-        });
       ctx.body = update.documentId;
     } catch (err) {
       ctx.body = err;

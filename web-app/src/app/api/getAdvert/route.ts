@@ -6,6 +6,7 @@ export async function GET(request: Request) {
       {
         method: "GET",
         headers: { Authorization: `bearer ${process.env.STRAPI_TOKEN}` },
+        cache: "no-store",
       }
     );
     const responseJson = await response.json();

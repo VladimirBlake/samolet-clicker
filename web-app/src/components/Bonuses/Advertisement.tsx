@@ -1,42 +1,38 @@
+"use client";
 import { useEffect, useState } from "react";
 import { Link } from "../Link/Link";
+import useSWR from "swr";
+import Image from "next/image";
 
 export default function Advertisement() {
-  const [advertisementData, setAdvertisementData] = useState<{
-    url: string;
-    photo: string;
-  }>({
-    url: "",
-    photo: "url",
-  });
+  const { data, isLoading, error } = useSWR(
+    `https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/getAdvert`
+  );
 
-  useEffect(() => {
-    fetch(`https://${process.env.NEXT_PUBLIC_HOSTNAME}/api/getAdvert`, {
-      method: "GET",
-    })
-      .then((res) => res.json())
-      .then((res) =>
-        setAdvertisementData({
-          url: res.data.url,
-          photo: res.data.thumbnail_image_url,
-        })
-      )
-      .catch((err) => {});
-  }, []);
+  if (isLoading) {
+    return (
+      <Link
+        href={""}
+        className="col-span-2 bg-[#3496FD] rounded-3xl bg-cover w-full text-lg font-medium flex items-center justify-center"
+      ></Link>
+    );
+  }
 
   return (
     <Link
-      href={advertisementData.url ? advertisementData.url : ""}
+      href={data.data.url}
       style={{
-        background:
-          advertisementData.url === ""
-            ? "#3496FD"
-            : `url(${advertisementData.photo}) center / cover no-repeat`,
+        background: `url(${data.data.thumbnail_image_url}) center / cover no-repeat`,
         backgroundSize: "cover",
       }}
-      className="col-span-2 bg-[#3496FD] rounded-3xl bg-cover w-full text-lg font-medium flex items-center justify-center"
+      className="col-span-2 bg-[#3496FD] rounded-3xl bg-cover w-full text-lg font-medium flex items-center justify-center overflow-hidden relative"
     >
-      {/* <span className="text-white">реклама</span> */}
+      <Image
+        src={data.data.thumbnail_image_url}
+        alt=""
+        fill={true}
+        className="w-full h-full object-cover"
+      />
     </Link>
   );
 }

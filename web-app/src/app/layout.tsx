@@ -7,6 +7,7 @@ import "@telegram-apps/telegram-ui/dist/styles.css";
 import "normalize.css/normalize.css";
 import "./_assets/globals.css";
 import StoreProvider from "./StoreProvider";
+import SWRProvider from "@/utils/SWRProvider";
 
 export const metadata: Metadata = {
   title: "Your Application Title Goes Here",
@@ -22,13 +23,15 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <StoreProvider>
-      <html className="w-full h-full max-h-dvh">
-        <body className="bg-bg-blue font-cofo text-white w-full h-full max-h-dvh relative flex justify-center overflow-hidden">
-          <div className="w-full max-w-[420px] h-full max-h-dvh relative overflow-hidden">
-            <Root>{children}</Root>
-          </div>
-        </body>
-      </html>
+      <SWRProvider>
+        <html className="w-full h-full max-h-dvh">
+          <body className="bg-bg-blue font-cofo text-white w-full h-full max-h-dvh relative flex justify-center overflow-hidden">
+            <div className="w-full max-w-[420px] h-full max-h-dvh relative overflow-hidden">
+              <Root>{children}</Root>
+            </div>
+          </body>
+        </html>
+      </SWRProvider>
     </StoreProvider>
   );
 }
